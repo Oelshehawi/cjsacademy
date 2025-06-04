@@ -1,4 +1,4 @@
-import { VideoHero } from './components/VideoHero';
+import { VideoHero } from './components/VideoHero/VideoHero';
 import BioSection from './components/BioSection';
 import TestimonialsSection from './components/TestimonialsSection';
 import BookingSection from './components/BookingSection';
