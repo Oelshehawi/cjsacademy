@@ -5,23 +5,23 @@ import {
   FaUsers,
   FaVideo,
   FaBrain,
-  FaRuler,
   FaBullseye,
-  FaGolfBall,
+  FaChalkboardTeacher,
+  FaDumbbell,
 } from 'react-icons/fa';
 import { IconType } from 'react-icons';
 
 const SERVICES = [
-  { icon: GiGolfTee, label: 'Swing Analysis' },
-  { icon: FaBullseye, label: 'Putting Practice' },
-  { icon: FaVideo, label: 'Video Analysis' },
-  { icon: FaBrain, label: 'Mental Game' },
-  { icon: FaRuler, label: 'Club Fitting' },
-  { icon: FaUsers, label: 'Group Lessons' },
-  { icon: IoGolfOutline, label: 'Shot Accuracy' },
-  { icon: IoFitnessOutline, label: 'Golf Fitness' },
-  { icon: FaGolfBall, label: 'Ball Flight Laws' },
-  { icon: GiGolfFlag, label: 'Course Strategy' },
+  { icon: GiGolfTee, label: 'Swing Mechanics' },
+  { icon: FaBullseye, label: 'Short Game Mastery' },
+  { icon: IoGolfOutline, label: 'Driving & Long Game' },
+  { icon: FaBrain, label: 'Mental Game Training' },
+  { icon: GiGolfFlag, label: 'Course Management' },
+  { icon: FaChalkboardTeacher, label: 'Expert Coaching' },
+  { icon: FaVideo, label: 'Mock Tournaments' },
+  { icon: IoFitnessOutline, label: 'Physical Conditioning' },
+  { icon: FaUsers, label: 'On-site Coaching' },
+  { icon: FaDumbbell, label: 'Tournament Prep' },
 ];
 
 interface ServiceItemProps {
