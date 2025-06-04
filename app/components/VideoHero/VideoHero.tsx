@@ -54,15 +54,22 @@ export function VideoHero() {
       />
 
       {/* CTA Button */}
-      <div className='absolute left-1/2 right-auto top-6 z-20 -translate-x-1/2 md:left-auto md:right-6 md:translate-x-0'>
+      <AnimatePresence>
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          className='absolute left-1/2 right-auto top-6 z-20 -translate-x-1/2 md:left-auto md:right-6 md:translate-x-0'
+          initial={{ opacity: 0, y: -100 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1, duration: 0.6 }}
+          transition={{
+            delay: 3,
+            duration: 1,
+            type: 'spring',
+            stiffness: 50,
+            damping: 15,
+          }}
         >
           <RoundedSlideButton shouldAnimate={shouldAnimateButton} />
         </motion.div>
-      </div>
+      </AnimatePresence>
 
       {/* Content */}
       <div className='relative z-10 flex h-full flex-col items-center justify-center px-4'>

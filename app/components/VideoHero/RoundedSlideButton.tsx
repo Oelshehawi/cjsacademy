@@ -19,23 +19,12 @@ export const RoundedSlideButton = ({
   shouldAnimate,
 }: RoundedSlideButtonProps) => {
   const [hasAnimated, setHasAnimated] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 4000);
-
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     if (shouldAnimate && !hasAnimated) {
       setHasAnimated(true);
     }
   }, [shouldAnimate, hasAnimated]);
-
-  if (!isVisible) return null;
 
   return (
     <button
