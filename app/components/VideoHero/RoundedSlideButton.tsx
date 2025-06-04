@@ -19,12 +19,23 @@ export const RoundedSlideButton = ({
   shouldAnimate,
 }: RoundedSlideButtonProps) => {
   const [hasAnimated, setHasAnimated] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 4000);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (shouldAnimate && !hasAnimated) {
       setHasAnimated(true);
     }
   }, [shouldAnimate, hasAnimated]);
+
+  if (!isVisible) return null;
 
   return (
     <button
@@ -55,7 +66,7 @@ export const RoundedSlideButton = ({
       }}
     >
       <LandPlot className='h-4 w-4' />
-      <span>Book a Lesson</span>
+      <span className='text-xs sm:text-base'>Book a Lesson</span>
     </button>
   );
 };

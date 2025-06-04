@@ -193,6 +193,14 @@ const PackageCard = ({
   priceNote,
   delay = 0,
 }: PackageCardProps) => {
+  const openCalendly = () => {
+    if (typeof window !== 'undefined' && window.Calendly) {
+      window.Calendly.initPopupWidget({
+        url: 'https://calendly.com/oelshehawi/30min',
+      });
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -252,13 +260,7 @@ const PackageCard = ({
       <motion.button
         whileHover={{ scale: 1.015 }}
         whileTap={{ scale: 0.985 }}
-        onClick={() => {
-          if (typeof window !== 'undefined' && (window as Window).Calendly) {
-            (window as Window).Calendly.initPopupWidget({
-              url: 'https://calendly.com/oelshehawi/30min',
-            });
-          }
-        }}
+        onClick={openCalendly}
         className={`w-full py-4 mt-8 rounded-lg font-semibold uppercase cursor-pointer ${
           highlighted
             ? 'bg-emerald-500 text-white hover:bg-emerald-600'
