@@ -17,6 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en' className='scroll-smooth'>
+      <head>
+        <link
+          href='https://assets.calendly.com/assets/external/widget.css'
+          rel='stylesheet'
+        />
+      </head>
       <body className={`${inter.className} antialiased`}>{children}</body>
     </html>
   );

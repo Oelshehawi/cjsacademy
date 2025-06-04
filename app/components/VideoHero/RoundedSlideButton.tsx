@@ -1,9 +1,18 @@
+'use client';
+
 import { useEffect, useState } from 'react';
-import { motion } from 'motion/react';
 import { LandPlot } from 'lucide-react';
 
 interface RoundedSlideButtonProps {
   shouldAnimate: boolean;
+}
+
+declare global {
+  interface Window {
+    Calendly: {
+      initPopupWidget: (options: { url: string }) => void;
+    };
+  }
 }
 
 export const RoundedSlideButton = ({
@@ -41,7 +50,7 @@ export const RoundedSlideButton = ({
       `}
       onClick={() => {
         document
-          .getElementById('contact')
+          .getElementById('pricing')
           ?.scrollIntoView({ behavior: 'smooth' });
       }}
     >

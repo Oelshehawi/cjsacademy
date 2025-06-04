@@ -18,12 +18,8 @@ const ShuffleTestimonials = () => {
   };
 
   return (
-    <div className='relative grid place-content-center overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-950 px-4 sm:px-8 py-12 sm:py-24 text-emerald-50'>
-      {/* Decorative elements */}
-      <div className='absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(0,255,150,0.1),rgba(0,0,0,0))]' />
-      <div className='absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(0,255,150,0.1),rgba(0,0,0,0))]' />
-
-      <div className='relative -ml-[50px] sm:-ml-[100px] h-[350px] sm:h-[450px] w-[275px] sm:w-[350px] md:-ml-[175px]'>
+    <div className='relative grid place-content-center overflow-hidden rounded-3xl  px-4 sm:px-8 py-12 sm:py-24 text-emerald-50'>
+      <div className='relative -ml-[50px] sm:-ml-[100px] h-[350px] sm:h-[450px] w-[375px] sm:w-[350px] md:-ml-[175px]'>
         <Card
           imgUrl='/IMG-20250603-WA0002.jpg'
           testimonial='The coaching at CJS Academy transformed my game. My handicap dropped from 18 to 12 in just six months of dedicated training.'

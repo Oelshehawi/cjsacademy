@@ -87,6 +87,10 @@ export default function BioSection() {
 
   const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
 
+  const scrollToPricing = () => {
+    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <div ref={containerRef} className='min-h-screen relative py-20'>
       {/* Background Image */}
@@ -114,7 +118,7 @@ export default function BioSection() {
               boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.4)',
               transition: { duration: 0.2 },
             }}
-            className='bg-white/5 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl flex flex-col h-[800px] xs:h-[750px] sm:h-[750px] md:h-[650px] border border-white/10 transition-shadow duration-300'
+            className='bg-white/5 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl flex flex-col h-[900px] xs:h-[750px] sm:h-[750px] md:h-[850px] border border-white/10 transition-shadow duration-300'
             layoutId={'coach-card-' + coachIndex}
           >
             <div className='relative h-96'>
@@ -173,6 +177,15 @@ export default function BioSection() {
                   </p>
                 </motion.div>
               </AnimatePresence>
+
+              <motion.button
+                whileHover={{ scale: 1.015 }}
+                whileTap={{ scale: 0.985 }}
+                onClick={scrollToPricing}
+                className='mt-6 w-full bg-emerald-500 hover:cursor-pointer text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-emerald-600 transition-colors duration-300 shadow-md'
+              >
+                Book Now with {coach.name.split(' ')[0]}
+              </motion.button>
             </div>
           </motion.div>
         ))}
