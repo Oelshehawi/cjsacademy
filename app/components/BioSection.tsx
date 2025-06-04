@@ -82,12 +82,10 @@ export default function BioSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start end', 'center center'],
+    offset: ['start end', 'end center'],
   });
 
-  const opacity = useTransform(scrollYProgress, [0.7, 0.8], [0, 1]);
-  const leftSlide = useTransform(scrollYProgress, [0.4, 0.8], [-200, 0]);
-  const rightSlide = useTransform(scrollYProgress, [0.4, 0.8], [200, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [0, 1]);
 
   return (
     <div ref={containerRef} className='min-h-screen relative py-20'>
@@ -110,14 +108,13 @@ export default function BioSection() {
             key={coach.name}
             style={{
               opacity,
-              x: coachIndex === 0 ? leftSlide : rightSlide,
             }}
             whileHover={{
               scale: 1.02,
               boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.4)',
               transition: { duration: 0.2 },
             }}
-            className='bg-white/5 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl flex flex-col md:h-[650px] border border-white/10 transition-shadow duration-300'
+            className='bg-white/5 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl flex flex-col h-[800px] xs:h-[750px] sm:h-[750px] md:h-[650px] border border-white/10 transition-shadow duration-300'
             layoutId={'coach-card-' + coachIndex}
           >
             <div className='relative h-96'>
