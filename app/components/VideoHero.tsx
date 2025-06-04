@@ -90,6 +90,15 @@ export function VideoHero() {
       const textTimer = setTimeout(() => {
         setShowText(true);
         setShouldAnimateButton(true);
+
+        // Start the feature rotation after the initial delay
+        const rotationInterval = setInterval(() => {
+          setCurrentFeatureIndex((prev) =>
+            prev === LESSON_FEATURES.length - 1 ? 0 : prev + 1
+          );
+        }, 3000);
+
+        return () => clearInterval(rotationInterval);
       }, 9000);
 
       // Handle video end
@@ -104,17 +113,6 @@ export function VideoHero() {
         }
       };
     }
-  }, []);
-
-  // Rotate through features
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentFeatureIndex((prev) =>
-        prev === LESSON_FEATURES.length - 1 ? 0 : prev + 1
-      );
-    }, 3000);
-
-    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -136,7 +134,7 @@ export function VideoHero() {
       />
 
       {/* CTA Button */}
-      <div className='absolute right-6 top-6 z-20'>
+      <div className='absolute left-1/2 right-auto top-6 z-20 -translate-x-1/2 md:left-auto md:right-6 md:translate-x-0'>
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -178,7 +176,7 @@ export function VideoHero() {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className='relative mt-8 w-full max-w-2xl overflow-hidden px-4'
               >
-                <div className='flex items-center justify-center'>
+                <div className='min-h-[180px] flex items-center justify-center'>
                   <AnimatePresence mode='wait'>
                     <motion.div
                       key={currentFeatureIndex}
@@ -186,7 +184,7 @@ export function VideoHero() {
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -100 }}
                       transition={{ duration: 0.5 }}
-                      className='text-center'
+                      className='text-center w-full'
                     >
                       <div className='rounded-xl bg-white/10 backdrop-blur-lg'>
                         <div className='px-8 py-6'>
@@ -205,13 +203,15 @@ export function VideoHero() {
                 {/* Feature Indicators */}
                 <div className='mt-6 flex justify-center gap-2'>
                   {LESSON_FEATURES.map((_, index) => (
-                    <div
+                    <button
                       key={index}
+                      onClick={() => setCurrentFeatureIndex(index)}
                       className={`h-1.5 w-8 rounded-full transition-colors ${
                         index === currentFeatureIndex
                           ? 'bg-white'
                           : 'bg-white/30'
                       }`}
+                      aria-label={`Go to feature ${index + 1}`}
                     />
                   ))}
                 </div>
