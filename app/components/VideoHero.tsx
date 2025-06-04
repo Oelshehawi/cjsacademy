@@ -90,6 +90,7 @@ export function VideoHero() {
       const textTimer = setTimeout(() => {
         setShowText(true);
         setShouldAnimateButton(true);
+        setVideoEnded(true);
 
         // Start the feature rotation after the initial delay
         const rotationInterval = setInterval(() => {
@@ -103,7 +104,8 @@ export function VideoHero() {
 
       // Handle video end
       videoRef.current.onended = () => {
-        setVideoEnded(true);
+        // Remove this since we're handling it with the text timing
+        // setVideoEnded(true);
       };
 
       return () => {
