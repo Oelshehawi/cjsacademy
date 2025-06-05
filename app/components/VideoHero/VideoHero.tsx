@@ -44,6 +44,7 @@ export function VideoHero() {
         src='/golfballontee.mp4'
         muted
         playsInline
+        autoPlay
       />
 
       {/* Overlay - darker when video ends */}
