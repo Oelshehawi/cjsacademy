@@ -19,7 +19,7 @@ const coachBios: CoachBio[] = [
   {
     name: 'Josh Kujundzic',
     title: 'Class "A" PGA of Canada Professional',
-    image: '/IMG-20250603-WA0005.jpg',
+    image: '/joshPhoto.jpg',
     pills: [
       {
         title: 'Background',
