@@ -105,7 +105,7 @@ Best regards,
 [Your Name]
 [Your Phone Number]`);
 
-    window.location.href = `mailto:josh@cjsacademy.ca?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:joshkujundzicgolf@gmail.com?subject=${subject}&body=${body}`;
   };
 
   const handleBookingClick = (coachName: string) => {

@@ -283,7 +283,7 @@ Best regards,
 [Your Name]
 [Your Phone Number]`);
 
-    return `mailto:info@cjsacademy.ca?subject=${subject}&body=${body}`;
+    return `mailto:joshkujundzicgolf@gmail.com?subject=${subject}&body=${body}`;
   };
 
   const openEmail = () => {
