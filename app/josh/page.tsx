@@ -4,26 +4,6 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 
-declare global {
-  interface Window {
-    Calendly: {
-      initPopupWidget: (options: { url: string }) => void;
-    };
-  }
-}
-
-interface CalendlyConfig {
-  privateLesson: string;
-  semiPrivateLesson: string;
-  groupClinic: string;
-}
-
-const calendlyUrls: CalendlyConfig = {
-  privateLesson: 'https://calendly.com/oelshehawi/30min',
-  semiPrivateLesson: 'https://calendly.com/oelshehawi/semi-private',
-  groupClinic: 'https://calendly.com/oelshehawi/group-clinic',
-};
-
 const coachBio = {
   name: 'Josh Kujundzic',
   title: 'Class "A" PGA of Canada Professional',
@@ -54,15 +34,22 @@ const coachBio = {
 
 export default function JoshPage() {
   const [selectedPill, setSelectedPill] = useState(0);
-  const [selectedEvent, setSelectedEvent] =
-    useState<keyof CalendlyConfig>('privateLesson');
 
-  const openCalendly = () => {
-    if (typeof window !== 'undefined' && window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: calendlyUrls[selectedEvent],
-      });
-    }
+  const openJoshEmail = () => {
+    const subject = encodeURIComponent(
+      'Golf Lesson Booking Request - Private Lesson'
+    );
+    const body = encodeURIComponent(`Hi Josh,
+
+I would like to book a Private Lesson with you.
+
+Please let me know your availability and we can discuss the details.
+
+Best regards,
+[Your Name]
+[Your Phone Number]`);
+
+    window.location.href = `mailto:josh@cjsacademy.ca?subject=${subject}&body=${body}`;
   };
 
   return (
@@ -119,47 +106,15 @@ export default function JoshPage() {
             </motion.div>
           </AnimatePresence>
 
-          <div className='mt-6 space-y-4'>
-            <div className='flex flex-wrap gap-2'>
-              <button
-                onClick={() => setSelectedEvent('privateLesson')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  selectedEvent === 'privateLesson'
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                }`}
-              >
-                Private Lesson
-              </button>
-              <button
-                onClick={() => setSelectedEvent('semiPrivateLesson')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  selectedEvent === 'semiPrivateLesson'
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                }`}
-              >
-                Semi-Private
-              </button>
-              <button
-                onClick={() => setSelectedEvent('groupClinic')}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
-                  selectedEvent === 'groupClinic'
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-white/10 text-gray-300 hover:bg-white/20'
-                }`}
-              >
-                Group Clinic
-              </button>
-            </div>
-
+          <div className='mt-6'>
+            {/* Primary Email Button */}
             <motion.button
               whileHover={{ scale: 1.015 }}
               whileTap={{ scale: 0.985 }}
-              onClick={openCalendly}
+              onClick={openJoshEmail}
               className='w-full bg-emerald-500 hover:cursor-pointer text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-emerald-600 transition-colors duration-300 shadow-md'
             >
-              Book Now with Josh
+              Email Josh for a Lesson
             </motion.button>
           </div>
         </div>

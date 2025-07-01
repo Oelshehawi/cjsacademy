@@ -10,16 +10,42 @@ export function VideoHero() {
   const [showText, setShowText] = useState(false);
   const [videoEnded, setVideoEnded] = useState(false);
   const [shouldAnimateButton, setShouldAnimateButton] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
+
+  useEffect(() => {
+    // Detect mobile device
+    const checkMobile =
+      window.innerWidth <= 768 ||
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
+    setIsMobile(checkMobile);
+  }, []);
 
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.play();
+      // Handle video ready state
+      const handleLoadedData = () => {
+        setVideoReady(true);
+        videoRef.current?.play();
+      };
+
+      videoRef.current.addEventListener('loadeddata', handleLoadedData);
+
+      // Fallback timeout in case loadeddata doesn't fire
+      const fallbackTimer = setTimeout(() => {
+        setVideoReady(true);
+      }, 500);
+
+      // Faster timing on mobile since we start 3 seconds ahead
+      const textDelay = isMobile ? 6000 : 9000; // 6s on mobile, 9s on desktop
 
       const textTimer = setTimeout(() => {
         setShowText(true);
         setShouldAnimateButton(true);
         setVideoEnded(true);
-      }, 9000);
+      }, textDelay);
 
       videoRef.current.onended = () => {
         // Remove this since we're handling it with the text timing
@@ -28,23 +54,33 @@ export function VideoHero() {
 
       return () => {
         clearTimeout(textTimer);
+        clearTimeout(fallbackTimer);
         if (videoRef.current) {
+          videoRef.current.removeEventListener('loadeddata', handleLoadedData);
           videoRef.current.onended = null;
         }
       };
     }
-  }, []);
+  }, [isMobile]);
+
+  // Get video source with fragment for mobile
+  const getVideoSource = () => {
+    return isMobile ? '/golfballontee.mp4#t=3' : '/golfballontee.mp4';
+  };
 
   return (
     <div className='relative h-screen w-full overflow-hidden'>
       {/* Video Background */}
       <video
         ref={videoRef}
-        className='absolute h-full w-full object-cover'
-        src='/golfballontee.mp4'
+        className={`absolute h-full w-full object-cover transition-opacity duration-500 ${
+          videoReady ? 'opacity-100' : 'opacity-0'
+        }`}
+        src={getVideoSource()}
         muted
         playsInline
         autoPlay
+        preload='metadata'
       />
 
       {/* Overlay - darker when video ends */}

@@ -46,7 +46,7 @@ const coachBios: CoachBio[] = [
   {
     name: 'Christine Wong',
     title: 'Class "A" PGA of Canada Professional',
-    image: '/IMG-20250603-WA0012.jpg',
+    image: '/christinePhoto.jpg',
     pills: [
       {
         title: 'Background',
@@ -91,21 +91,36 @@ export default function BioSection() {
     document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  return (
-    <div ref={containerRef} className='min-h-screen relative py-20'>
-      {/* Background Image */}
-      <div
-        className='absolute inset-0 z-0'
-        style={{
-          backgroundImage: 'url(/golfcourse.jpg)',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
-        }}
-      >
-        <div className='absolute inset-0 bg-black/40' />
-      </div>
+  const openJoshEmail = () => {
+    const subject = encodeURIComponent(
+      'Golf Lesson Booking Request - Private Lesson'
+    );
+    const body = encodeURIComponent(`Hi Josh,
 
+I would like to book a Private Lesson with you.
+
+Please let me know your availability and we can discuss the details.
+
+Best regards,
+[Your Name]
+[Your Phone Number]`);
+
+    window.location.href = `mailto:josh@cjsacademy.ca?subject=${subject}&body=${body}`;
+  };
+
+  const handleBookingClick = (coachName: string) => {
+    if (coachName === 'Josh Kujundzic') {
+      openJoshEmail();
+    } else {
+      scrollToPricing();
+    }
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className='min-h-screen relative bg-gradient-to-b from-gray-950 via-emerald-950 to-gray-950 py-20'
+    >
       <div className='relative z-10 max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8'>
         {coachBios.map((coach, coachIndex) => (
           <motion.div
@@ -118,7 +133,7 @@ export default function BioSection() {
               boxShadow: '0 20px 25px -5px rgb(0 0 0 / 0.4)',
               transition: { duration: 0.2 },
             }}
-            className='bg-white/5 backdrop-blur-xl rounded-2xl overflow-hidden shadow-xl flex flex-col h-[900px] xs:h-[750px] sm:h-[750px] md:h-[850px] border border-white/10 transition-shadow duration-300'
+            className='bg-white/5 backdrop-blur-xl  rounded-2xl overflow-hidden shadow-xl flex flex-col xs:h-[750px] sm:h-[850px] md:h-[850px] border border-white/10 transition-shadow duration-300'
             layoutId={'coach-card-' + coachIndex}
           >
             <div className='relative h-96'>
@@ -181,10 +196,15 @@ export default function BioSection() {
               <motion.button
                 whileHover={{ scale: 1.015 }}
                 whileTap={{ scale: 0.985 }}
-                onClick={scrollToPricing}
-                className='mt-6 w-full bg-emerald-500 hover:cursor-pointer text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-emerald-600 transition-colors duration-300 shadow-md'
+                onClick={() => handleBookingClick(coach.name)}
+                className='mt-6 w-full bg-emerald-500 hover:cursor-pointer text-white py-3 px-4 sm:px-6 rounded-lg text-base sm:text-lg font-semibold hover:bg-emerald-600 transition-colors duration-300 shadow-md'
               >
-                Book Now with {coach.name.split(' ')[0]}
+                {coach.name === 'Josh Kujundzic'
+                  ? 'Contact Josh to Book'
+                  : 'Book Now with'}{' '}
+                {coach.name === 'Josh Kujundzic'
+                  ? ''
+                  : coach.name.split(' ')[0]}
               </motion.button>
             </div>
           </motion.div>
