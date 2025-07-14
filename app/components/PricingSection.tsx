@@ -269,11 +269,9 @@ const PackageCard = ({
   isPrimary = false,
   packageType = 'Private',
 }: PackageCardProps) => {
-  const createEmailLink = (packageName: string, packageType: string) => {
-    const subject = encodeURIComponent(
-      `Golf Lesson Package Inquiry - ${packageName}`
-    );
-    const body = encodeURIComponent(`Hi,
+  const createEmailContent = (packageName: string, packageType: string) => {
+    const subject = `Golf Lesson Package Inquiry - ${packageName}`;
+    const body = `Hi,
 
 I'm interested in the ${packageName} ${packageType} package.
 
@@ -281,13 +279,39 @@ Please let me know more details about scheduling and availability.
 
 Best regards,
 [Your Name]
-[Your Phone Number]`);
+[Your Phone Number]`;
 
-    return `mailto:joshkujundzicgolf@gmail.com?subject=${subject}&body=${body}`;
+    return { subject, body };
+  };
+
+  const createGmailLink = (packageName: string, packageType: string) => {
+    const { subject, body } = createEmailContent(packageName, packageType);
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedBody = encodeURIComponent(body);
+    return `https://mail.google.com/mail/?view=cm&fs=1&to=joshkujundzicgolf@gmail.com&su=${encodedSubject}&body=${encodedBody}`;
+  };
+
+  const createMailtoLink = (packageName: string, packageType: string) => {
+    const { subject, body } = createEmailContent(packageName, packageType);
+    const encodedSubject = encodeURIComponent(subject);
+    const encodedBody = encodeURIComponent(body);
+    return `mailto:joshkujundzicgolf@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
+  };
+
+  const isMobile = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
   };
 
   const openEmail = () => {
-    window.location.href = createEmailLink(title, packageType);
+    if (isMobile()) {
+      // Mobile: use mailto (works with any email app)
+      window.location.href = createMailtoLink(title, packageType);
+    } else {
+      // Desktop: use Gmail web interface
+      window.open(createGmailLink(title, packageType), '_blank');
+    }
   };
 
   const openCalendly = () => {
