@@ -46,7 +46,7 @@ export default function ChristinePage() {
   const openCalendly = () => {
     if (typeof window !== 'undefined' && window.Calendly) {
       window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/cjsgolfinc/30min',
+        url: 'https://calendly.com/cjsgolfinc/privategolflesson',
       });
     }
   };
