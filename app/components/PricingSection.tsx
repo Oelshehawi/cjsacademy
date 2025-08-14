@@ -171,7 +171,7 @@ const PricingSection = () => {
                       <PackageCard
                         title='Single Lesson'
                         subtitle='2 Person Max'
-                        price='$80'
+                        price='$90'
                         description='Perfect for friends or family to improve their skills together.'
                         features={[
                           'Warm-Up & Goals assessment',
@@ -187,7 +187,7 @@ const PricingSection = () => {
                       <PackageCard
                         title='5 Hour Package'
                         subtitle='2 Person Max'
-                        price='$350'
+                        price='$400'
                         description='A focused, personalized setting for two players to develop their skills.'
                         features={[
                           'Initial Assessment & Warm-Up routines',
@@ -204,7 +204,7 @@ const PricingSection = () => {
                       <PackageCard
                         title='10 Hour Package'
                         subtitle='2 Person Max'
-                        price='$600'
+                        price='$700'
                         description='Comprehensive coaching experience covering all aspects of golf improvement.'
                         features={[
                           'Initial Assessment & Full Swing (2.5 hours)',
