@@ -193,6 +193,12 @@ Best regards,
                 </motion.div>
               </AnimatePresence>
 
+              {coach.name === 'Josh Kujundzic' && (
+                <p className='mt-4 text-center text-emerald-400 font-bold text-sm mb-2'>
+                  * Lessons will be held at Quilchena Golf Course NOT Savage
+                  Creek
+                </p>
+              )}
               <motion.button
                 whileHover={{ scale: 1.015 }}
                 whileTap={{ scale: 0.985 }}

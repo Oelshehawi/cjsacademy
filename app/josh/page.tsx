@@ -107,6 +107,9 @@ Best regards,
           </AnimatePresence>
 
           <div className='mt-6'>
+            <p className='text-center text-emerald-400 font-bold text-sm mb-4'>
+              * Lessons will be held at Quilchena Golf Course NOT Savage Creek
+            </p>
             {/* Primary Email Button */}
             <motion.button
               whileHover={{ scale: 1.015 }}
