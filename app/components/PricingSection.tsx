@@ -2,10 +2,21 @@
 
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
+import CoachSelectionModal from './CoachSelectionModal';
 
 const PricingSection = () => {
   const [selected, setSelected] = useState('private');
   const [showAllPackages, setShowAllPackages] = useState(false);
+  const [showCoachModal, setShowCoachModal] = useState(false);
+  const [selectedPackage, setSelectedPackage] = useState<{
+    name: string;
+    type: string;
+  } | null>(null);
+
+  const handlePackageSelect = (packageName: string, packageType: string) => {
+    setSelectedPackage({ name: packageName, type: packageType });
+    setShowCoachModal(true);
+  };
 
   return (
     <section
@@ -26,6 +37,9 @@ const PricingSection = () => {
           <p className='text-lg text-emerald-400/80'>
             Start your golf journey with a personalized lesson
           </p>
+          <p className='text-sm text-emerald-400/60 mt-2'>
+            * Pricing may vary for indoor facility lessons
+          </p>
         </motion.div>
 
         {/* Single Lesson Card - Always Visible */}
@@ -45,6 +59,7 @@ const PricingSection = () => {
             isPrimary={true}
             delay={0}
             packageType='Private'
+            onClick={() => handlePackageSelect('Single Lesson', 'Private')}
           />
         </div>
 
@@ -135,6 +150,9 @@ const PricingSection = () => {
                         ]}
                         delay={0}
                         packageType='Private'
+                        onClick={() =>
+                          handlePackageSelect('Single Lesson', 'Private')
+                        }
                       />
                       <PackageCard
                         title='5 Hour Package'
@@ -150,6 +168,9 @@ const PricingSection = () => {
                         highlighted={true}
                         delay={0.1}
                         packageType='Private'
+                        onClick={() =>
+                          handlePackageSelect('5 Hour Package', 'Private')
+                        }
                       />
                       <PackageCard
                         title='10 Hour Package'
@@ -164,6 +185,9 @@ const PricingSection = () => {
                         ]}
                         delay={0.2}
                         packageType='Private'
+                        onClick={() =>
+                          handlePackageSelect('10 Hour Package', 'Private')
+                        }
                       />
                     </>
                   ) : (
@@ -183,6 +207,9 @@ const PricingSection = () => {
                         priceNote='each'
                         delay={0}
                         packageType='Semi-Private'
+                        onClick={() =>
+                          handlePackageSelect('Single Lesson', 'Semi-Private')
+                        }
                       />
                       <PackageCard
                         title='5 Hour Package'
@@ -200,6 +227,9 @@ const PricingSection = () => {
                         priceNote='each'
                         delay={0.1}
                         packageType='Semi-Private'
+                        onClick={() =>
+                          handlePackageSelect('5 Hour Package', 'Semi-Private')
+                        }
                       />
                       <PackageCard
                         title='10 Hour Package'
@@ -216,6 +246,9 @@ const PricingSection = () => {
                         priceNote='each'
                         delay={0.2}
                         packageType='Semi-Private'
+                        onClick={() =>
+                          handlePackageSelect('10 Hour Package', 'Semi-Private')
+                        }
                       />
                     </>
                   )}
@@ -239,6 +272,14 @@ const PricingSection = () => {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Coach Selection Modal */}
+        <CoachSelectionModal
+          isOpen={showCoachModal}
+          onClose={() => setShowCoachModal(false)}
+          packageName={selectedPackage?.name || ''}
+          packageType={selectedPackage?.type || ''}
+        />
       </div>
     </section>
   );
@@ -255,6 +296,7 @@ interface PackageCardProps {
   delay?: number;
   isPrimary?: boolean;
   packageType?: string;
+  onClick?: () => void;
 }
 
 const PackageCard = ({
@@ -267,63 +309,8 @@ const PackageCard = ({
   priceNote,
   delay = 0,
   isPrimary = false,
-  packageType = 'Private',
+  onClick,
 }: PackageCardProps) => {
-  const createEmailContent = (packageName: string, packageType: string) => {
-    const subject = `Golf Lesson Package Inquiry - ${packageName}`;
-    const body = `Hi,
-
-I'm interested in the ${packageName} ${packageType} package.
-
-Please let me know more details about scheduling and availability.
-
-Best regards,
-[Your Name]
-[Your Phone Number]`;
-
-    return { subject, body };
-  };
-
-  const createGmailLink = (packageName: string, packageType: string) => {
-    const { subject, body } = createEmailContent(packageName, packageType);
-    const encodedSubject = encodeURIComponent(subject);
-    const encodedBody = encodeURIComponent(body);
-    return `https://mail.google.com/mail/?view=cm&fs=1&to=joshkujundzicgolf@gmail.com&su=${encodedSubject}&body=${encodedBody}`;
-  };
-
-  const createMailtoLink = (packageName: string, packageType: string) => {
-    const { subject, body } = createEmailContent(packageName, packageType);
-    const encodedSubject = encodeURIComponent(subject);
-    const encodedBody = encodeURIComponent(body);
-    return `mailto:joshkujundzicgolf@gmail.com?subject=${encodedSubject}&body=${encodedBody}`;
-  };
-
-  const isMobile = () => {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    );
-  };
-
-  const openEmail = () => {
-    if (isMobile()) {
-      // Mobile: use mailto (works with any email app)
-      window.location.href = createMailtoLink(title, packageType);
-    } else {
-      // Desktop: use Gmail web interface
-      window.open(createGmailLink(title, packageType), '_blank');
-    }
-  };
-
-  const openCalendly = () => {
-    if (typeof window !== 'undefined' && window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/cjsgolfinc/privategolflesson',
-      });
-    }
-  };
-
-  const isSingleLesson = title === 'Single Lesson';
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -401,14 +388,14 @@ Best regards,
       <motion.button
         whileHover={{ scale: 1.015 }}
         whileTap={{ scale: 0.985 }}
-        onClick={isSingleLesson ? openCalendly : openEmail}
+        onClick={onClick}
         className={`w-full py-4 mt-8 rounded-lg font-semibold uppercase cursor-pointer ${
           highlighted || isPrimary
             ? 'bg-emerald-500 text-white hover:bg-emerald-600'
             : 'bg-white/10 text-white hover:bg-white/20'
         }`}
       >
-        {isSingleLesson ? 'Book Now' : 'Contact Us for Details'}
+        Book Now
       </motion.button>
     </motion.div>
   );
