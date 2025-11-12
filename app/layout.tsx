@@ -20,7 +20,9 @@ export const metadata: Metadata = {
       'Transform your golf game with personalized instruction from CPGA professionals at CJS Academy. Book your lesson today.',
     images: [
       {
-        url: '/cjslogo2.jpg',
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
         alt: 'CJS Academy - Elite Golf Coaching',
       },
     ],
@@ -32,7 +34,9 @@ export const metadata: Metadata = {
       'Transform your golf game with personalized instruction from CPGA professionals at CJS Academy. Book your lesson today.',
     images: [
       {
-        url: '/cjslogo2.jpg',
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
         alt: 'CJS Academy - Elite Golf Coaching',
       },
     ],
