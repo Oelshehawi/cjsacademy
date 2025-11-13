@@ -4,6 +4,14 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 
+declare global {
+  interface Window {
+    Calendly: {
+      initPopupWidget: (options: { url: string }) => void;
+    };
+  }
+}
+
 const coachBio = {
   name: 'Josh Kujundzic',
   title: 'Class "A" PGA of Canada Professional',
@@ -35,21 +43,12 @@ const coachBio = {
 export default function JoshPage() {
   const [selectedPill, setSelectedPill] = useState(0);
 
-  const openJoshEmail = () => {
-    const subject = encodeURIComponent(
-      'Golf Lesson Booking Request - Private Lesson'
-    );
-    const body = encodeURIComponent(`Hi Josh,
-
-I would like to book a Private Lesson with you.
-
-Please let me know your availability and we can discuss the details.
-
-Best regards,
-[Your Name]
-[Your Phone Number]`);
-
-    window.location.href = `mailto:joshkujundzicgolf@gmail.com?subject=${subject}&body=${body}`;
+  const openCalendly = () => {
+    if (typeof window !== 'undefined' && window.Calendly) {
+      window.Calendly.initPopupWidget({
+        url: 'https://calendly.com/joshkujundzicgolf/golflessons',
+      });
+    }
   };
 
   return (
@@ -107,15 +106,25 @@ Best regards,
           </AnimatePresence>
 
           <div className='mt-6'>
-            {/* Primary Email Button */}
+            {/* Primary Booking Button */}
             <motion.button
               whileHover={{ scale: 1.015 }}
               whileTap={{ scale: 0.985 }}
-              onClick={openJoshEmail}
+              onClick={openCalendly}
               className='w-full bg-emerald-500 hover:cursor-pointer text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-emerald-600 transition-colors duration-300 shadow-md'
             >
-              Email Josh for a Lesson
+              Book a Lesson with Josh
             </motion.button>
+            <p className='mt-3 text-sm text-gray-400 text-center'>
+              If there is no suitable availability, email Josh at{' '}
+              <a
+                href='mailto:joshkujundzic@gmail.com'
+                className='underline text-emerald-300 hover:text-emerald-200'
+              >
+                joshkujundzic@gmail.com
+              </a>
+              .
+            </p>
           </div>
         </div>
       </motion.div>

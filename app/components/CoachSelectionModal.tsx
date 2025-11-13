@@ -3,6 +3,14 @@
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 
+declare global {
+  interface Window {
+    Calendly: {
+      initPopupWidget: (options: { url: string }) => void;
+    };
+  }
+}
+
 interface CoachSelectionModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -23,8 +31,8 @@ const CoachSelectionModal = ({
       image: '/joshPhoto.jpg',
       location: 'Quilchena Golf & Country Club',
       secondaryLocation: 'Central Golf Club',
-      method: 'email' as const,
-      email: 'joshkujundzicgolf@gmail.com',
+      method: 'calendly' as const,
+      calendlyUrl: 'https://calendly.com/joshkujundzicgolf/golflessons',
     },
     {
       name: 'Christine Wong',
@@ -37,79 +45,8 @@ const CoachSelectionModal = ({
     },
   ];
 
-  const createEmailContent = (
-    coachName: string,
-    packageName: string,
-    packageType: string
-  ) => {
-    const subject = `Golf Lesson Package Inquiry - ${packageName}`;
-    const body = `Hi ${coachName},
-
-I'm interested in the ${packageName} ${packageType} package.
-
-Please let me know more details about scheduling and availability.
-
-Best regards,
-[Your Name]
-[Your Phone Number]`;
-
-    return { subject, body };
-  };
-
-  const createGmailLink = (
-    coachName: string,
-    packageName: string,
-    packageType: string,
-    email: string
-  ) => {
-    const { subject, body } = createEmailContent(
-      coachName,
-      packageName,
-      packageType
-    );
-    const encodedSubject = encodeURIComponent(subject);
-    const encodedBody = encodeURIComponent(body);
-    return `https://mail.google.com/mail/?view=cm&fs=1&to=${email}&su=${encodedSubject}&body=${encodedBody}`;
-  };
-
-  const createMailtoLink = (
-    coachName: string,
-    packageName: string,
-    packageType: string,
-    email: string
-  ) => {
-    const { subject, body } = createEmailContent(
-      coachName,
-      packageName,
-      packageType
-    );
-    const encodedSubject = encodeURIComponent(subject);
-    const encodedBody = encodeURIComponent(body);
-    return `mailto:${email}?subject=${encodedSubject}&body=${encodedBody}`;
-  };
-
-  const isMobile = () => {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    );
-  };
-
   const handleCoachSelect = (coach: (typeof coaches)[0]) => {
-    if (coach.method === 'email') {
-      if (isMobile()) {
-        window.location.href = createMailtoLink(
-          coach.name,
-          packageName,
-          packageType,
-          coach.email
-        );
-      } else {
-        window.open(
-          createGmailLink(coach.name, packageName, packageType, coach.email),
-          '_blank'
-        );
-      }
-    } else if (coach.method === 'calendly') {
+    if (coach.method === 'calendly') {
       if (typeof window !== 'undefined' && window.Calendly) {
         window.Calendly.initPopupWidget({
           url: coach.calendlyUrl,
@@ -220,9 +157,9 @@ Best regards,
 
                       <div className='mt-4 pt-4 border-t border-white/10'>
                         <span className='inline-block bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full text-sm font-medium'>
-                          {coach.method === 'email'
-                            ? 'Email Booking'
-                            : 'Instant Booking'}
+                          {coach.method === 'calendly'
+                            ? 'Instant Booking'
+                            : 'Email Booking'}
                         </span>
                       </div>
                     </div>
@@ -230,7 +167,17 @@ Best regards,
                 ))}
               </div>
 
-              <div className='text-center mt-8'>
+              <div className='text-center mt-8 space-y-3'>
+                <p className='text-sm text-gray-300'>
+                  If there is no suitable availability for Josh, email him at{' '}
+                  <a
+                    href='mailto:joshkujundzic@gmail.com'
+                    className='underline text-emerald-300 hover:text-emerald-200'
+                  >
+                    joshkujundzic@gmail.com
+                  </a>
+                  .
+                </p>
                 <button
                   onClick={onClose}
                   className='text-emerald-400/70 hover:text-emerald-300/80 px-6 py-2 text-sm transition-colors'

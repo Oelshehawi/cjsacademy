@@ -3,6 +3,14 @@
 import { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
 
+declare global {
+  interface Window {
+    Calendly: {
+      initPopupWidget: (options: { url: string }) => void;
+    };
+  }
+}
+
 interface BioPill {
   title: string;
   content: string;
@@ -91,26 +99,17 @@ export default function BioSection() {
     document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const openJoshEmail = () => {
-    const subject = encodeURIComponent(
-      'Golf Lesson Booking Request - Private Lesson'
-    );
-    const body = encodeURIComponent(`Hi Josh,
-
-I would like to book a Private Lesson with you.
-
-Please let me know your availability and we can discuss the details.
-
-Best regards,
-[Your Name]
-[Your Phone Number]`);
-
-    window.location.href = `mailto:joshkujundzicgolf@gmail.com?subject=${subject}&body=${body}`;
+  const openCalendly = () => {
+    if (typeof window !== 'undefined' && window.Calendly) {
+      window.Calendly.initPopupWidget({
+        url: 'https://calendly.com/joshkujundzicgolf/golflessons',
+      });
+    }
   };
 
   const handleBookingClick = (coachName: string) => {
     if (coachName === 'Josh Kujundzic') {
-      openJoshEmail();
+      openCalendly();
     } else {
       scrollToPricing();
     }
@@ -200,12 +199,21 @@ Best regards,
                 className='mt-6 w-full bg-emerald-500 hover:cursor-pointer text-white py-3 px-4 sm:px-6 rounded-lg text-base sm:text-lg font-semibold hover:bg-emerald-600 transition-colors duration-300 shadow-md'
               >
                 {coach.name === 'Josh Kujundzic'
-                  ? 'Contact Josh to Book'
-                  : 'Book Now with'}{' '}
-                {coach.name === 'Josh Kujundzic'
-                  ? ''
-                  : coach.name.split(' ')[0]}
+                  ? 'Book a Lesson with Josh'
+                  : `Book Now with ${coach.name.split(' ')[0]}`}
               </motion.button>
+              {coach.name === 'Josh Kujundzic' && (
+                <p className='mt-3 text-sm text-gray-300 text-center'>
+                  If there is no suitable availability, email Josh at{' '}
+                  <a
+                    href='mailto:joshkujundzic@gmail.com'
+                    className='underline text-emerald-300 hover:text-emerald-200'
+                  >
+                    joshkujundzic@gmail.com
+                  </a>
+                  .
+                </p>
+              )}
             </div>
           </motion.div>
         ))}
