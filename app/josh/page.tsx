@@ -118,10 +118,10 @@ export default function JoshPage() {
             <p className='mt-3 text-sm text-gray-400 text-center'>
               If there is no suitable availability, email Josh at{' '}
               <a
-                href='mailto:joshkujundzic@gmail.com'
+                href='mailto:joshkujundzicgolf@gmail.com'
                 className='underline text-emerald-300 hover:text-emerald-200'
               >
-                joshkujundzic@gmail.com
+                joshkujundzicgolf@gmail.com
               </a>
               .
             </p>
