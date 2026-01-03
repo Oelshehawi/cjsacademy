@@ -221,10 +221,10 @@ const PricingSection = () => {
             ) : (
               <>
                 <PackageCard
-                  title='Single Lesson'
+                  title='Game Essentials Lesson'
                   subtitle='2 Person Max'
                   price='$90'
-                  description='A focused session designed to build confidence, clarity, and immediate improvement for two players. Each lesson is fully tailored to your goals, experience level, and learning style. Instruction takes place on the practice facilities, with optional on-course coaching to apply skills in real-play situations.'
+                  description='A focused one-on-one session designed to build confidence, clarity, and immediate improvement. Each lesson is fully tailored to your goals, experience level, and learning style. Instruction takes place on the practice facilities, with optional on-course coaching to apply skills in real-play situations.'
                   features={[
                     'Warm-Up & Goals assessment',
                     'Swing Basics for each person',
@@ -236,14 +236,14 @@ const PricingSection = () => {
                   delay={0.2}
                   packageType='Semi-Private'
                   onClick={() =>
-                    handlePackageSelect('Single Lesson', 'Semi-Private')
+                    handlePackageSelect('Game Essentials Lesson', 'Semi-Private')
                   }
                 />
                 <PackageCard
-                  title='5 Hour Package'
+                  title='Total Game Tune-Up'
                   subtitle='2 Person Max'
                   price='$425'
-                  description='A flexible multi-lesson package designed to sharpen every part of your game for two players. This package is customized to your individual strengths, weaknesses, and objectives, allowing each session to evolve as your game improves. Lessons are conducted on the practice areas, with optional on-course coaching incorporated as desired.'
+                  description='A flexible multi-lesson package designed to sharpen every part of your game. This package is customized to your individual strengths, weaknesses, and objectives, allowing each session to evolve as your game improves. Lessons are conducted on the practice areas, with optional on-course coaching incorporated as desired.'
                   features={[
                     'Initial Assessment & Warm-Up routines',
                     'Full Swing Fundamentals with video analysis',
@@ -256,11 +256,11 @@ const PricingSection = () => {
                   delay={0.3}
                   packageType='Semi-Private'
                   onClick={() =>
-                    handlePackageSelect('5 Hour Package', 'Semi-Private')
+                    handlePackageSelect('Total Game Tune-Up', 'Semi-Private')
                   }
                 />
                 <PackageCard
-                  title='10 Hour Package'
+                  title='Complete Player Development Program'
                   subtitle='2 Person Max'
                   price='$800'
                   description='A comprehensive coaching experience for golfers committed to long-term improvement and consistency. This program is entirely built around your personal goals and playing needs, adapting as you progress. The extended format allows for technical refinement, strategic development, and confidence-building both on and off the course, with optional on-course instruction included.'
@@ -275,7 +275,10 @@ const PricingSection = () => {
                   delay={0.4}
                   packageType='Semi-Private'
                   onClick={() =>
-                    handlePackageSelect('10 Hour Package', 'Semi-Private')
+                    handlePackageSelect(
+                      'Complete Player Development Program',
+                      'Semi-Private'
+                    )
                   }
                 />
               </>
@@ -326,6 +329,7 @@ const PackageCard = ({
   priceNote,
   delay = 0,
   isPrimary = false,
+  packageType,
   onClick,
 }: PackageCardProps) => {
   return (
@@ -348,7 +352,7 @@ const PackageCard = ({
       >
         <AnimatePresence mode='wait'>
           <motion.div
-            key={title + description}
+            key={packageType + title + description}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
