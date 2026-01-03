@@ -155,22 +155,40 @@ const TestimonialsSection = () => {
   return (
     <section className='relative w-full bg-gradient-to-b from-gray-950 via-emerald-950 to-gray-950 py-16 sm:py-24 md:py-32'>
       <div className='container relative mx-auto px-4 sm:px-6 lg:px-8'>
-        <div className='mx-auto max-w-2xl text-center mb-12'>
-          <h2 className='bg-gradient-to-r from-emerald-400 via-emerald-300 to-emerald-400 bg-clip-text pb-4 text-3xl sm:text-4xl font-bold text-transparent md:text-5xl'>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className='mx-auto max-w-2xl text-center mb-12'
+        >
+          <motion.h2
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className='bg-gradient-to-r from-emerald-400 via-emerald-300 to-emerald-400 bg-clip-text pb-4 text-3xl sm:text-4xl font-bold text-transparent md:text-5xl'
+          >
             Real Results from Real Golfers
-          </h2>
-          <p className='text-base sm:text-lg text-emerald-400/80'>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className='text-base sm:text-lg text-emerald-400/80'
+          >
             See how CJS Academy has transformed golfers of all skill levels
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
         {/* Featured Testimonial */}
         <div className='max-w-4xl mx-auto mb-12'>
           <motion.div
             key={activeTestimonial}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, y: 30, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className='bg-white/5 backdrop-blur-xl rounded-2xl p-8 border border-white/10'
           >
             <div className='flex flex-col md:flex-row items-center gap-8'>
@@ -202,11 +220,24 @@ const TestimonialsSection = () => {
         </div>
 
         {/* Testimonial Navigator */}
-        <div className='flex justify-center mb-12'>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+          className='flex justify-center mb-12'
+        >
           <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4'>
             {testimonials.map((testimonial, index) => (
               <motion.button
                 key={testimonial.id}
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.3,
+                  delay: 0.3 + index * 0.05,
+                }}
                 onClick={() => setActiveTestimonial(index)}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -226,7 +257,7 @@ const TestimonialsSection = () => {
               </motion.button>
             ))}
           </div>
-        </div>
+        </motion.div>
 
         {/* Stats Section */}
         <div className='grid grid-cols-1 md:grid-cols-3 gap-8 mb-12'>
@@ -257,12 +288,18 @@ const TestimonialsSection = () => {
             transition={{ duration: 0.5, delay: 0.3 }}
             className='text-center'
           >
-            <AnimatedCounter target={95} suffix='%' />
-            <div className='text-white'>Would Recommend</div>
+            <AnimatedCounter target={15} suffix='+ years' />
+            <div className='text-white'>Combined Experience</div>
           </motion.div>
         </div>
 
-        <div className='text-center'>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className='text-center'
+        >
           <motion.button
             whileHover={{ scale: 1.015 }}
             whileTap={{ scale: 0.985 }}
@@ -271,7 +308,7 @@ const TestimonialsSection = () => {
           >
             Start Your Golf Transformation
           </motion.button>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -120,12 +120,31 @@ export default function BioSection() {
       ref={containerRef}
       className='min-h-screen relative bg-gradient-to-b from-gray-950 via-emerald-950 to-gray-950 py-20'
     >
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+        className='text-center mb-12 px-4'
+      >
+        <h2 className='bg-gradient-to-r from-emerald-400 via-emerald-300 to-emerald-400 bg-clip-text pb-4 text-4xl font-bold text-transparent md:text-5xl'>
+          Meet Your Coaches
+        </h2>
+        <p className='text-lg text-emerald-400/80 mt-4'>
+          Learn from PGA of Canada Class "A" Professionals
+        </p>
+      </motion.div>
       <div className='relative z-10 max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8'>
         {coachBios.map((coach, coachIndex) => (
           <motion.div
             key={coach.name}
-            style={{
-              opacity,
+            initial={{ opacity: 0, y: 40, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{
+              duration: 0.6,
+              delay: coachIndex * 0.2,
+              ease: [0.22, 1, 0.36, 1],
             }}
             whileHover={{
               scale: 1.02,
@@ -135,10 +154,18 @@ export default function BioSection() {
             className='bg-white/5 backdrop-blur-xl  rounded-2xl overflow-hidden shadow-xl flex flex-col xs:h-[750px] sm:h-[850px] md:h-[850px] border border-white/10 transition-shadow duration-300'
             layoutId={'coach-card-' + coachIndex}
           >
-            <div className='relative h-96'>
+            <div className='relative h-96 overflow-hidden'>
               <motion.img
                 src={coach.image}
                 alt={coach.name}
+                initial={{ scale: 1.1, opacity: 0 }}
+                whileInView={{ scale: 1, opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.8,
+                  delay: coachIndex * 0.2 + 0.2,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
                 className={`w-full h-full object-cover ${
                   coach.name === 'Christine Wong'
                     ? 'object-top'
@@ -147,19 +174,66 @@ export default function BioSection() {
                 layoutId={'coach-image-' + coachIndex}
               />
               <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.6,
+                  delay: coachIndex * 0.2 + 0.4,
+                }}
                 className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6'
                 layoutId={'coach-header-' + coachIndex}
               >
-                <h2 className='text-3xl font-bold text-white'>{coach.name}</h2>
-                <p className='text-xl text-gray-300'>{coach.title}</p>
+                <motion.h2
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.5,
+                    delay: coachIndex * 0.2 + 0.5,
+                  }}
+                  className='text-3xl font-bold text-white'
+                >
+                  {coach.name}
+                </motion.h2>
+                <motion.p
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{
+                    duration: 0.5,
+                    delay: coachIndex * 0.2 + 0.6,
+                  }}
+                  className='text-xl text-gray-300'
+                >
+                  {coach.title}
+                </motion.p>
               </motion.div>
             </div>
 
             <div className='p-6 flex-grow flex flex-col'>
-              <div className='flex flex-wrap gap-1.5 sm:gap-2 mb-4'>
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.5,
+                  delay: coachIndex * 0.2 + 0.7,
+                }}
+                className='flex flex-wrap gap-1.5 sm:gap-2 mb-4'
+              >
                 {coach.pills.map((pill, pillIndex) => (
-                  <button
+                  <motion.button
                     key={pill.title}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{
+                      duration: 0.3,
+                      delay: coachIndex * 0.2 + 0.7 + pillIndex * 0.1,
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                     onClick={() =>
                       setSelectedPills({
                         ...selectedPills,
@@ -169,13 +243,13 @@ export default function BioSection() {
                     className={`px-2.5 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-medium transition-colors cursor-pointer ${
                       selectedPills[coach.name] === pillIndex
                         ? 'bg-blue-500 text-white shadow-lg scale-105'
-                        : 'bg-white/10 text-gray-300 hover:bg-white/20 hover:scale-105'
+                        : 'bg-white/10 text-gray-300 hover:bg-white/20'
                     }`}
                   >
                     {pill.title}
-                  </button>
+                  </motion.button>
                 ))}
-              </div>
+              </motion.div>
 
               <AnimatePresence mode='wait'>
                 <motion.div
@@ -193,6 +267,13 @@ export default function BioSection() {
               </AnimatePresence>
 
               <motion.button
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{
+                  duration: 0.5,
+                  delay: coachIndex * 0.2 + 1.1,
+                }}
                 whileHover={{ scale: 1.015 }}
                 whileTap={{ scale: 0.985 }}
                 onClick={() => handleBookingClick(coach.name)}

@@ -1,28 +1,99 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import CoachSelectionModal from './CoachSelectionModal';
+import PackageGuidanceModal from './PackageGuidanceModal';
 
 const PricingSection = () => {
   const [selected, setSelected] = useState('private');
-  const [showAllPackages, setShowAllPackages] = useState(false);
   const [showCoachModal, setShowCoachModal] = useState(false);
+  const [showGuidanceModal, setShowGuidanceModal] = useState(false);
+  const [isPricingInView, setIsPricingInView] = useState(false);
+  const pricingRef = useRef<HTMLElement>(null);
   const [selectedPackage, setSelectedPackage] = useState<{
     name: string;
     type: string;
   } | null>(null);
 
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsPricingInView(entry.isIntersecting);
+      },
+      { threshold: 0.1 }
+    );
+
+    if (pricingRef.current) {
+      observer.observe(pricingRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
   const handlePackageSelect = (packageName: string, packageType: string) => {
     setSelectedPackage({ name: packageName, type: packageType });
     setShowCoachModal(true);
+    setShowGuidanceModal(false);
   };
 
   return (
     <section
+      ref={pricingRef}
       id='pricing'
       className='relative w-full overflow-hidden bg-gradient-to-b from-gray-950 via-emerald-950 to-gray-950 py-32'
     >
+      {/* Floating Guidance Indicator - Fixed position, visible when pricing section is in view */}
+      <AnimatePresence>
+        {isPricingInView && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 20 }}
+            transition={{ duration: 0.5 }}
+            className='fixed bottom-8 right-4 md:right-8 z-40 pointer-events-none'
+          >
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setShowGuidanceModal(true)}
+              className='pointer-events-auto bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-3 rounded-full shadow-lg shadow-emerald-900/50 flex items-center gap-2 text-sm font-medium cursor-pointer'
+            >
+              <svg
+                width='20'
+                height='20'
+                viewBox='0 0 20 20'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  d='M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z'
+                  stroke='currentColor'
+                  strokeWidth='2'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                />
+                <path
+                  d='M10 6V10'
+                  stroke='currentColor'
+                  strokeWidth='2'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                />
+                <path
+                  d='M10 14H10.01'
+                  stroke='currentColor'
+                  strokeWidth='2'
+                  strokeLinecap='round'
+                  strokeLinejoin='round'
+                />
+              </svg>
+              <span className='hidden sm:inline'>Not sure which package?</span>
+              <span className='sm:hidden'>Need help choosing?</span>
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <div className='container relative mx-auto px-4'>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -42,236 +113,182 @@ const PricingSection = () => {
           </p>
         </motion.div>
 
-        {/* Single Lesson Card - Always Visible */}
-        <div className='max-w-md mx-auto mb-8'>
-          <PackageCard
-            title='Single Lesson'
-            price='$170'
-            description='Take your game to the next level with one-on-one coaching tailored to your skill level and goals.'
-            features={[
-              'Personalized swing analysis & technique adjustments',
-              'Short game & full swing drills for rapid improvement',
-              'Immediate feedback & practice plan',
-              'High-tech tools for enhanced learning',
-              'Ideal for beginners to advanced players',
-            ]}
-            highlighted={true}
-            isPrimary={true}
-            delay={0}
-            packageType='Private'
-            onClick={() => handlePackageSelect('Single Lesson', 'Private')}
-          />
+        {/* Package Type Selector */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className='flex items-center justify-center gap-6 mb-16'
+        >
+          <button
+            onClick={() => setSelected('private')}
+            className={`relative rounded-lg py-3 px-8 font-medium cursor-pointer ${
+              selected === 'private'
+                ? 'text-white scale-105'
+                : 'text-emerald-400/80 hover:text-emerald-300/90 hover:scale-105'
+            }`}
+          >
+            Private Lessons
+            {selected === 'private' && (
+              <motion.span
+                layoutId='package-type'
+                className='absolute inset-0 -z-10 bg-emerald-800/50 rounded-lg shadow-lg shadow-emerald-900/20'
+              />
+            )}
+          </button>
+          <button
+            onClick={() => setSelected('semi')}
+            className={`relative rounded-lg py-3 px-8 font-medium cursor-pointer ${
+              selected === 'semi'
+                ? 'text-white scale-105'
+                : 'text-emerald-400/80 hover:text-emerald-300/90 hover:scale-105'
+            }`}
+          >
+            Semi-Private Lessons
+            {selected === 'semi' && (
+              <motion.span
+                layoutId='package-type'
+                className='absolute inset-0 -z-10 bg-emerald-800/50 rounded-lg shadow-lg shadow-emerald-900/20'
+              />
+            )}
+          </button>
+        </motion.div>
+
+        {/* Package Cards */}
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto'>
+          <AnimatePresence mode='wait'>
+            {selected === 'private' ? (
+              <>
+                <PackageCard
+                  title='Game Essentials Lesson'
+                  subtitle='Single Lesson – $170'
+                  price='$170'
+                  description='A focused one-on-one session designed to build confidence, clarity, and immediate improvement. Each lesson is fully tailored to your goals, experience level, and learning style. Instruction takes place on the practice facilities, with optional on-course coaching to apply skills in real-play situations.'
+                  features={[
+                    'Customized swing analysis and technique refinement',
+                    'Full swing and short game skill development',
+                    'Immediate feedback with a clear, personalized practice plan',
+                    'Suitable for beginners through advanced players',
+                  ]}
+                  delay={0.2}
+                  packageType='Private'
+                  onClick={() =>
+                    handlePackageSelect('Game Essentials Lesson', 'Private')
+                  }
+                />
+                <PackageCard
+                  title='Total Game Tune-Up'
+                  subtitle='5-Hour Package – $750'
+                  price='$750'
+                  description='A flexible multi-lesson package designed to sharpen every part of your game. This package is customized to your individual strengths, weaknesses, and objectives, allowing each session to evolve as your game improves. Lessons are conducted on the practice areas, with optional on-course coaching incorporated as desired.'
+                  features={[
+                    'Hour 1: Swing Fundamentals – grip, posture, mechanics',
+                    'Hour 2: Short Game – chipping, pitching, bunker play',
+                    'Hour 3: Putting – stroke mechanics and green reading',
+                    'Hour 4: Course Strategy – shot selection and decision-making (on-course optional)',
+                    'Hour 5: Long Game – driver, fairway woods, long irons',
+                  ]}
+                  highlighted={true}
+                  delay={0.3}
+                  packageType='Private'
+                  onClick={() =>
+                    handlePackageSelect('Total Game Tune-Up', 'Private')
+                  }
+                />
+                <PackageCard
+                  title='Complete Player Development Program'
+                  subtitle='10-Hour Package – $1,400'
+                  price='$1,400'
+                  description='A comprehensive coaching experience for golfers committed to long-term improvement and consistency. This program is entirely built around your personal goals and playing needs, adapting as you progress. The extended format allows for technical refinement, strategic development, and confidence-building both on and off the course, with optional on-course instruction included.'
+                  features={[
+                    'Hours 1–2: Swing Fundamentals and Mechanics',
+                    'Hours 3–4: Short Game and Putting Mastery',
+                    'Hours 5–6: Long Game Development',
+                    'Hours 7–8: Course Strategy and Game Management (on-course optional)',
+                    'Hours 9–10: Performance Review and Personalized Improvement Plan',
+                  ]}
+                  delay={0.4}
+                  packageType='Private'
+                  onClick={() =>
+                    handlePackageSelect(
+                      'Complete Player Development Program',
+                      'Private'
+                    )
+                  }
+                />
+              </>
+            ) : (
+              <>
+                <PackageCard
+                  title='Single Lesson'
+                  subtitle='2 Person Max'
+                  price='$90'
+                  description='Perfect for friends or family to improve their skills together.'
+                  features={[
+                    'Warm-Up & Goals assessment',
+                    'Swing Basics for each person',
+                    'Short Game practice sessions',
+                    'Course Strategy guidance',
+                    'Learn together with personalized tips',
+                  ]}
+                  priceNote='each'
+                  delay={0.2}
+                  packageType='Semi-Private'
+                  onClick={() =>
+                    handlePackageSelect('Single Lesson', 'Semi-Private')
+                  }
+                />
+                <PackageCard
+                  title='5 Hour Package'
+                  subtitle='2 Person Max'
+                  price='$425'
+                  description='A focused, personalized setting for two players to develop their skills.'
+                  features={[
+                    'Initial Assessment & Warm-Up routines',
+                    'Full Swing Fundamentals with video analysis',
+                    'Short Game Development & drills',
+                    'On-Course Play & Strategy training',
+                    'Putting & Mental Game techniques',
+                  ]}
+                  highlighted={true}
+                  priceNote='each'
+                  delay={0.3}
+                  packageType='Semi-Private'
+                  onClick={() =>
+                    handlePackageSelect('5 Hour Package', 'Semi-Private')
+                  }
+                />
+                <PackageCard
+                  title='10 Hour Package'
+                  subtitle='2 Person Max'
+                  price='$800'
+                  description='Comprehensive coaching experience covering all aspects of golf improvement.'
+                  features={[
+                    'Initial Assessment & Full Swing (2.5 hours)',
+                    'Short Game Mastery focus (2.5 hours)',
+                    'Putting & Green Reading (1.5 hours)',
+                    'On-Course Strategy (2 hours)',
+                    'Mental Game & Final Review (1.5 hours)',
+                  ]}
+                  priceNote='each'
+                  delay={0.4}
+                  packageType='Semi-Private'
+                  onClick={() =>
+                    handlePackageSelect('10 Hour Package', 'Semi-Private')
+                  }
+                />
+              </>
+            )}
+          </AnimatePresence>
         </div>
 
-        {/* Show More Options Button */}
-        {!showAllPackages && (
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className='text-center mb-8'
-          >
-            <button
-              onClick={() => setShowAllPackages(true)}
-              className='text-emerald-400 hover:text-emerald-300 border border-emerald-400/30 hover:border-emerald-300/50 px-6 py-3 rounded-lg transition-all duration-300 font-medium hover:cursor-pointer'
-            >
-              View All Packages & Options
-            </button>
-          </motion.div>
-        )}
-
-        {/* All Packages - Hidden by Default */}
-        <AnimatePresence>
-          {showAllPackages && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.5 }}
-              className='overflow-hidden'
-            >
-              {/* Package Type Selector */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className='flex items-center justify-center gap-6 mb-16'
-              >
-                <button
-                  onClick={() => setSelected('private')}
-                  className={`relative rounded-lg py-3 px-8 font-medium transition-all duration-300 cursor-pointer ${
-                    selected === 'private'
-                      ? 'text-white scale-105'
-                      : 'text-emerald-400/80 hover:text-emerald-300/90 hover:scale-105'
-                  }`}
-                >
-                  Private Lessons
-                  {selected === 'private' && (
-                    <motion.span
-                      layoutId='package-type'
-                      className='absolute inset-0 -z-10 bg-emerald-800/50 rounded-lg shadow-lg shadow-emerald-900/20'
-                    />
-                  )}
-                </button>
-                <button
-                  onClick={() => setSelected('semi')}
-                  className={`relative rounded-lg py-3 px-8 font-medium transition-all duration-300 cursor-pointer ${
-                    selected === 'semi'
-                      ? 'text-white scale-105'
-                      : 'text-emerald-400/80 hover:text-emerald-300/90 hover:scale-105'
-                  }`}
-                >
-                  Semi-Private Lessons
-                  {selected === 'semi' && (
-                    <motion.span
-                      layoutId='package-type'
-                      className='absolute inset-0 -z-10 bg-emerald-800/50 rounded-lg shadow-lg shadow-emerald-900/20'
-                    />
-                  )}
-                </button>
-              </motion.div>
-
-              {/* Package Cards */}
-              <div className='grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto'>
-                <AnimatePresence mode='wait'>
-                  {selected === 'private' ? (
-                    <>
-                      <PackageCard
-                        title='Single Lesson'
-                        price='$170'
-                        description='Take your game to the next level with one-on-one coaching tailored to your skill level and goals.'
-                        features={[
-                          'Personalized swing analysis & technique adjustments',
-                          'Short game & full swing drills for rapid improvement',
-                          'Immediate feedback & practice plan',
-                          'High-tech tools for enhanced learning',
-                          'Ideal for beginners to advanced players',
-                        ]}
-                        delay={0}
-                        packageType='Private'
-                        onClick={() =>
-                          handlePackageSelect('Single Lesson', 'Private')
-                        }
-                      />
-                      <PackageCard
-                        title='5 Hour Package'
-                        price='$750'
-                        description='The 5 Individual Hour Golf Lesson Package gives you the flexibility to focus on different areas of your game.'
-                        features={[
-                          'Hour 1: Swing Basics - mechanics, grip, posture',
-                          'Hour 2: Short Game - chipping, pitching, bunker play',
-                          'Hour 3: Putting - stroke and green reading',
-                          'Hour 4: Course Strategy - shot selection & management',
-                          'Hour 5: Long Game - drivers, fairways, long irons',
-                        ]}
-                        highlighted={true}
-                        delay={0.1}
-                        packageType='Private'
-                        onClick={() =>
-                          handlePackageSelect('5 Hour Package', 'Private')
-                        }
-                      />
-                      <PackageCard
-                        title='10 Hour Package'
-                        price='$1,400'
-                        description='A comprehensive package that gives you ample time to improve every aspect of your game with one-on-one coaching.'
-                        features={[
-                          'Hours 1-2: Swing Basics & mechanics',
-                          'Hours 3-4: Short Game & Putting mastery',
-                          'Hours 5-6: Long Game development',
-                          'Hours 7-8: Course Strategy & management',
-                          'Hours 9-10: Review & personalized plan',
-                        ]}
-                        delay={0.2}
-                        packageType='Private'
-                        onClick={() =>
-                          handlePackageSelect('10 Hour Package', 'Private')
-                        }
-                      />
-                    </>
-                  ) : (
-                    <>
-                      <PackageCard
-                        title='Single Lesson'
-                        subtitle='2 Person Max'
-                        price='$90'
-                        description='Perfect for friends or family to improve their skills together.'
-                        features={[
-                          'Warm-Up & Goals assessment',
-                          'Swing Basics for each person',
-                          'Short Game practice sessions',
-                          'Course Strategy guidance',
-                          'Learn together with personalized tips',
-                        ]}
-                        priceNote='each'
-                        delay={0}
-                        packageType='Semi-Private'
-                        onClick={() =>
-                          handlePackageSelect('Single Lesson', 'Semi-Private')
-                        }
-                      />
-                      <PackageCard
-                        title='5 Hour Package'
-                        subtitle='2 Person Max'
-                        price='$400'
-                        description='A focused, personalized setting for two players to develop their skills.'
-                        features={[
-                          'Initial Assessment & Warm-Up routines',
-                          'Full Swing Fundamentals with video analysis',
-                          'Short Game Development & drills',
-                          'On-Course Play & Strategy training',
-                          'Putting & Mental Game techniques',
-                        ]}
-                        highlighted={true}
-                        priceNote='each'
-                        delay={0.1}
-                        packageType='Semi-Private'
-                        onClick={() =>
-                          handlePackageSelect('5 Hour Package', 'Semi-Private')
-                        }
-                      />
-                      <PackageCard
-                        title='10 Hour Package'
-                        subtitle='2 Person Max'
-                        price='$700'
-                        description='Comprehensive coaching experience covering all aspects of golf improvement.'
-                        features={[
-                          'Initial Assessment & Full Swing (2.5 hours)',
-                          'Short Game Mastery focus (2.5 hours)',
-                          'Putting & Green Reading (1.5 hours)',
-                          'On-Course Strategy (2 hours)',
-                          'Mental Game & Final Review (1.5 hours)',
-                        ]}
-                        priceNote='each'
-                        delay={0.2}
-                        packageType='Semi-Private'
-                        onClick={() =>
-                          handlePackageSelect('10 Hour Package', 'Semi-Private')
-                        }
-                      />
-                    </>
-                  )}
-                </AnimatePresence>
-              </div>
-
-              {/* Hide Options Button */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className='text-center mt-12'
-              >
-                <button
-                  onClick={() => setShowAllPackages(false)}
-                  className='text-emerald-400/70 hover:text-emerald-300/80 px-4 py-2 text-sm transition-all duration-300 hover:cursor-pointer'
-                >
-                  Hide Additional Options
-                </button>
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Guidance Modal */}
+        <PackageGuidanceModal
+          isOpen={showGuidanceModal}
+          onClose={() => setShowGuidanceModal(false)}
+          onSelectPackage={handlePackageSelect}
+        />
 
         {/* Coach Selection Modal */}
         <CoachSelectionModal
@@ -313,10 +330,11 @@ const PackageCard = ({
 }: PackageCardProps) => {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, y: 30, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true }}
       exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.5, delay }}
+      transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
       className={`rounded-xl backdrop-blur-sm p-8 flex flex-col ${
         isPrimary ? 'h-auto' : 'h-[700px]'
       } ${
