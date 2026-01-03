@@ -41,7 +41,7 @@ const PricingSection = () => {
     <section
       ref={pricingRef}
       id='pricing'
-      className='relative w-full overflow-hidden bg-gradient-to-b from-gray-950 via-emerald-950 to-gray-950 py-32'
+      className='relative w-full overflow-hidden bg-linear-to-b from-gray-950 via-emerald-950 to-gray-950 py-32'
     >
       {/* Floating Guidance Indicator - Fixed position, visible when pricing section is in view */}
       <AnimatePresence>
@@ -102,7 +102,7 @@ const PricingSection = () => {
           transition={{ duration: 0.6 }}
           className='mx-auto max-w-2xl text-center mb-12'
         >
-          <h2 className='bg-gradient-to-r from-emerald-400 via-emerald-300 to-emerald-400 bg-clip-text pb-4 text-4xl font-bold text-transparent md:text-5xl'>
+          <h2 className='bg-linear-to-r from-emerald-400 via-emerald-300 to-emerald-400 bg-clip-text pb-4 text-4xl font-bold text-transparent md:text-5xl'>
             Book Your Lesson
           </h2>
           <p className='text-lg text-emerald-400/80'>
@@ -224,7 +224,7 @@ const PricingSection = () => {
                   title='Single Lesson'
                   subtitle='2 Person Max'
                   price='$90'
-                  description='Perfect for friends or family to improve their skills together.'
+                  description='A focused session designed to build confidence, clarity, and immediate improvement for two players. Each lesson is fully tailored to your goals, experience level, and learning style. Instruction takes place on the practice facilities, with optional on-course coaching to apply skills in real-play situations.'
                   features={[
                     'Warm-Up & Goals assessment',
                     'Swing Basics for each person',
@@ -243,7 +243,7 @@ const PricingSection = () => {
                   title='5 Hour Package'
                   subtitle='2 Person Max'
                   price='$425'
-                  description='A focused, personalized setting for two players to develop their skills.'
+                  description='A flexible multi-lesson package designed to sharpen every part of your game for two players. This package is customized to your individual strengths, weaknesses, and objectives, allowing each session to evolve as your game improves. Lessons are conducted on the practice areas, with optional on-course coaching incorporated as desired.'
                   features={[
                     'Initial Assessment & Warm-Up routines',
                     'Full Swing Fundamentals with video analysis',
@@ -263,7 +263,7 @@ const PricingSection = () => {
                   title='10 Hour Package'
                   subtitle='2 Person Max'
                   price='$800'
-                  description='Comprehensive coaching experience covering all aspects of golf improvement.'
+                  description='A comprehensive coaching experience for golfers committed to long-term improvement and consistency. This program is entirely built around your personal goals and playing needs, adapting as you progress. The extended format allows for technical refinement, strategic development, and confidence-building both on and off the course, with optional on-course instruction included.'
                   features={[
                     'Initial Assessment & Full Swing (2.5 hours)',
                     'Short Game Mastery focus (2.5 hours)',
@@ -336,7 +336,7 @@ const PackageCard = ({
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
       className={`rounded-xl backdrop-blur-sm p-8 flex flex-col ${
-        isPrimary ? 'h-auto' : 'h-[700px]'
+        isPrimary ? 'h-auto' : 'h-175'
       } ${
         highlighted || isPrimary
           ? 'bg-emerald-800/20 border-2 border-emerald-500/30'
@@ -344,7 +344,7 @@ const PackageCard = ({
       }`}
     >
       <div
-        className={`flex-grow ${!isPrimary ? 'overflow-y-auto scrollbar-thin scrollbar-track-emerald-900/20 scrollbar-thumb-emerald-600/20 pr-2' : ''}`}
+        className={`grow ${!isPrimary ? 'overflow-y-auto scrollbar-thin scrollbar-track-emerald-900/20 scrollbar-thumb-emerald-600/20 pr-2' : ''}`}
       >
         <AnimatePresence mode='wait'>
           <motion.div

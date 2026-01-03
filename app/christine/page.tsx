@@ -20,7 +20,7 @@ const coachBio = {
     {
       title: 'Background',
       content:
-        'Christine Wong is a highly accomplished Canadian golfer and PGA of Canada Class "A" Professional from Vancouver, British Columbia. She first gained recognition as a standout collegiate player at San Diego State University, where she won 4 NCAA individual titles.',
+        'Christine Wong is a highly accomplished Canadian golfer and PGA of Canada Class "A" Professional from Richmond, British Columbia. She first gained recognition as a standout collegiate player at San Diego State University, where she won 4 NCAA individual titles.',
     },
     {
       title: 'Career',
@@ -67,13 +67,13 @@ export default function ChristinePage() {
             sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
             priority
           />
-          <div className='absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6'>
+          <div className='absolute bottom-0 left-0 right-0 bg-linear-to-t from-black/80 to-transparent p-6'>
             <h2 className='text-3xl font-bold text-white'>{coachBio.name}</h2>
             <p className='text-xl text-gray-300'>{coachBio.title}</p>
           </div>
         </div>
 
-        <div className='p-6 flex-grow flex flex-col'>
+        <div className='p-6 grow flex flex-col'>
           <div className='flex flex-wrap gap-1.5 sm:gap-2 mb-4'>
             {coachBio.pills.map((pill, pillIndex) => (
               <button
@@ -97,7 +97,7 @@ export default function ChristinePage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
-              className='mt-4 flex-grow overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-blue-500/50 scrollbar-track-white/5'
+              className='mt-4 grow overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-blue-500/50 scrollbar-track-white/5'
             >
               <p className='text-lg leading-relaxed text-gray-200'>
                 {coachBio.pills[selectedPill].content}

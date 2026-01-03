@@ -59,7 +59,7 @@ const coachBios: CoachBio[] = [
       {
         title: 'Background',
         content:
-          'Christine Wong is a highly accomplished Canadian golfer and PGA of Canada Class "A" Professional from Vancouver, British Columbia. She first gained recognition as a standout collegiate player at San Diego State University, where she won 4 NCAA individual titles.',
+          'Christine Wong is a highly accomplished Canadian golfer and PGA of Canada Class "A" Professional from Richmond, British Columbia. She first gained recognition as a standout collegiate player at San Diego State University, where she won 4 NCAA individual titles.',
       },
       {
         title: 'Career',
