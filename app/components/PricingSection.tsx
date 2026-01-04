@@ -162,7 +162,7 @@ const PricingSection = () => {
               <>
                 <PackageCard
                   title='Game Essentials Lesson'
-                  subtitle='Single Lesson – $170'
+                  subtitle='1 Hour – $170'
                   price='$170'
                   description='A focused one-on-one session designed to build confidence, clarity, and immediate improvement. Each lesson is fully tailored to your goals, experience level, and learning style. Instruction takes place on the practice facilities, with optional on-course coaching to apply skills in real-play situations.'
                   features={[
@@ -222,7 +222,7 @@ const PricingSection = () => {
               <>
                 <PackageCard
                   title='Game Essentials Lesson'
-                  subtitle='2 Person Max'
+                  subtitle='1 Hour – 2 Person Max'
                   price='$90'
                   description='A focused one-on-one session designed to build confidence, clarity, and immediate improvement. Each lesson is fully tailored to your goals, experience level, and learning style. Instruction takes place on the practice facilities, with optional on-course coaching to apply skills in real-play situations.'
                   features={[
@@ -241,7 +241,7 @@ const PricingSection = () => {
                 />
                 <PackageCard
                   title='Total Game Tune-Up'
-                  subtitle='2 Person Max'
+                  subtitle='5-Hour Package – 2 Person Max'
                   price='$425'
                   description='A flexible multi-lesson package designed to sharpen every part of your game. This package is customized to your individual strengths, weaknesses, and objectives, allowing each session to evolve as your game improves. Lessons are conducted on the practice areas, with optional on-course coaching incorporated as desired.'
                   features={[
@@ -261,7 +261,7 @@ const PricingSection = () => {
                 />
                 <PackageCard
                   title='Complete Player Development Program'
-                  subtitle='2 Person Max'
+                  subtitle='10-Hour Package – 2 Person Max'
                   price='$800'
                   description='A comprehensive coaching experience for golfers committed to long-term improvement and consistency. This program is entirely built around your personal goals and playing needs, adapting as you progress. The extended format allows for technical refinement, strategic development, and confidence-building both on and off the course, with optional on-course instruction included.'
                   features={[
