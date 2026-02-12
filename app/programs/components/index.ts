@@ -1,4 +1,5 @@
 export { HeroSection } from './HeroSection';
+export { FeaturedProgramSection } from './FeaturedProgramSection';
 export { ProgramsSection } from './ProgramsSection';
 export { ServicesSection } from './ServicesSection';
 export { TechnologySection } from './TechnologySection';

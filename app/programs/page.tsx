@@ -1,5 +1,6 @@
 import {
   HeroSection,
+  FeaturedProgramSection,
   ProgramsSection,
   ServicesSection,
   TechnologySection,
@@ -11,6 +12,7 @@ export default function ProgramsPage() {
   return (
     <main className="min-h-screen">
       <HeroSection />
+      <FeaturedProgramSection />
       <ProgramsSection />
       <ServicesSection />
       <TechnologySection />

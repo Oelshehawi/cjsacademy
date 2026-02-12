@@ -1,14 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, LandPlot } from 'lucide-react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useHeroAnimation } from '../HeroAnimationContext';
 
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Programs & Services', href: '/programs' },
+  { name: 'Featured Program', href: '/programs#featured-program' },
   { name: 'Our Coaches', href: '/#coaches' },
   { name: 'Pricing', href: '/#pricing' },
 ];
@@ -59,27 +61,66 @@ const BookLessonButton = ({
 
 export function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [currentHash, setCurrentHash] = useState('');
+  const pathname = usePathname();
   const { isNavVisible, isHeroAnimationComplete, isHomePage } = useHeroAnimation();
+
+  useEffect(() => {
+    const syncHash = () => setCurrentHash(window.location.hash);
+    syncHash();
+    window.addEventListener('hashchange', syncHash);
+    return () => window.removeEventListener('hashchange', syncHash);
+  }, [pathname]);
 
   const scrollToSection = (href: string) => {
     setIsMobileMenuOpen(false);
     
-    // Handle hash links
-    if (href.includes('#')) {
-      const [path, hash] = href.split('#');
-      
-      // If we're not on the home page and trying to access a hash, navigate home first
-      if (path === '/' && window.location.pathname !== '/') {
-        window.location.href = href;
-        return;
-      }
-      
-      // Scroll to element
-      const element = document.getElementById(hash);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+    if (!href.includes('#')) return;
+
+    const [path, hash] = href.split('#');
+    const targetPath = path || pathname;
+
+    // Navigate first when target section is on another route
+    if (targetPath !== window.location.pathname) {
+      window.location.href = href;
+      return;
     }
+
+    const element = document.getElementById(hash);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+      const nextHash = `#${hash}`;
+      window.history.replaceState(null, '', `${targetPath}${nextHash}`);
+      setCurrentHash(nextHash);
+    }
+  };
+
+  const isLinkActive = (href: string) => {
+    const [path, hash] = href.split('#');
+    const targetPath = path || '/';
+    const isPathMatch = pathname === targetPath;
+
+    if (!hash) {
+      return isPathMatch && currentHash === '';
+    }
+
+    return isPathMatch && currentHash === `#${hash}`;
+  };
+
+  const getLinkClassName = (href: string, linkName: string, mobile = false) => {
+    const base = mobile
+      ? 'block px-4 py-3 rounded-xl border transition-all duration-200'
+      : 'px-4 py-2 text-sm rounded-lg border transition-all duration-200';
+
+    if (isLinkActive(href)) {
+      return `${base} text-white bg-emerald-500/20 border-emerald-400/40`;
+    }
+
+    if (linkName === 'Featured Program') {
+      return `${base} text-emerald-300 bg-emerald-500/10 border-emerald-500/30 hover:text-white hover:bg-emerald-500/20`;
+    }
+
+    return `${base} text-white/80 border-transparent hover:text-white hover:bg-white/10`;
   };
 
   const handleBookLesson = () => {
@@ -130,7 +171,7 @@ export function Navbar() {
                         scrollToSection(link.href);
                       }
                     }}
-                    className="px-4 py-2 text-sm text-white/80 hover:text-white rounded-lg hover:bg-white/10 transition-all duration-200"
+                    className={getLinkClassName(link.href, link.name)}
                   >
                     {link.name}
                   </Link>
@@ -212,7 +253,7 @@ export function Navbar() {
                           setIsMobileMenuOpen(false);
                         }
                       }}
-                      className="block px-4 py-3 text-white/80 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-200"
+                      className={getLinkClassName(link.href, link.name, true)}
                     >
                       {link.name}
                     </Link>
