@@ -108,9 +108,6 @@ const PricingSection = () => {
           <p className='text-lg text-emerald-400/80'>
             Start your golf journey with a personalized lesson
           </p>
-          <p className='text-sm text-emerald-400/60 mt-2'>
-            * Pricing may vary for indoor facility lessons
-          </p>
         </motion.div>
 
         {/* Package Type Selector */}

@@ -144,9 +144,6 @@ const CoachSelectionModal = ({
                           {coach.secondaryLocation}
                         </span>
                       </div>
-                      <p className='text-emerald-400/70 text-xs'>
-                        * Pricing may vary for indoor facility lessons
-                      </p>
                     </div>
 
                     <div className='mt-4 pt-4 border-t border-white/10'>
