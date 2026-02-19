@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import CalendlyScript from './components/CalendlyScript';
+import { Navbar } from './components/Navbar/Navbar';
+import { HeroAnimationProvider } from './components/HeroAnimationContext';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -58,7 +60,10 @@ export default function RootLayout({
       </head>
       <body className={`${inter.className} antialiased`}>
         <CalendlyScript />
-        {children}
+        <HeroAnimationProvider>
+          <Navbar />
+          {children}
+        </HeroAnimationProvider>
       </body>
     </html>
   );

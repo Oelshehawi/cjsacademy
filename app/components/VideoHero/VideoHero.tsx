@@ -2,16 +2,16 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { RoundedSlideButton } from './RoundedSlideButton';
 import { ScrollingServices } from './ScrollingServices';
+import { useHeroAnimation } from '../HeroAnimationContext';
 
 export function VideoHero() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [showText, setShowText] = useState(false);
   const [videoEnded, setVideoEnded] = useState(false);
-  const [shouldAnimateButton, setShouldAnimateButton] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
+  const { setHeroAnimationComplete } = useHeroAnimation();
 
   useEffect(() => {
     // Detect mobile device
@@ -22,6 +22,13 @@ export function VideoHero() {
       );
     setIsMobile(checkMobile);
   }, []);
+
+  // Signal that hero animation is complete when showText becomes true
+  useEffect(() => {
+    if (showText) {
+      setHeroAnimationComplete(true);
+    }
+  }, [showText, setHeroAnimationComplete]);
 
   useEffect(() => {
     if (videoRef.current) {
@@ -43,7 +50,6 @@ export function VideoHero() {
 
       const textTimer = setTimeout(() => {
         setShowText(true);
-        setShouldAnimateButton(true);
         setVideoEnded(true);
       }, textDelay);
 
@@ -89,24 +95,6 @@ export function VideoHero() {
           videoEnded ? 'bg-black/50' : 'bg-black/30'
         }`}
       />
-
-      {/* CTA Button */}
-      <AnimatePresence>
-        <motion.div
-          className='absolute left-1/2 right-auto top-6 z-20 -translate-x-1/2 md:left-auto md:right-6 md:translate-x-0'
-          initial={{ opacity: 0, y: -100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{
-            delay: 3,
-            duration: 1,
-            type: 'spring',
-            stiffness: 50,
-            damping: 15,
-          }}
-        >
-          <RoundedSlideButton shouldAnimate={shouldAnimateButton} />
-        </motion.div>
-      </AnimatePresence>
 
       {/* Content */}
       <div className='relative z-10 flex h-full flex-col items-center justify-center px-4'>

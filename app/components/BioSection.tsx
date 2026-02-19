@@ -118,6 +118,7 @@ export default function BioSection() {
   return (
     <div
       ref={containerRef}
+      id="coaches"
       className='min-h-screen relative bg-gradient-to-b from-gray-950 via-emerald-950 to-gray-950 py-20'
     >
       <motion.div
