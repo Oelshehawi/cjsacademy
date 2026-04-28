@@ -44,7 +44,10 @@ export default function ChristinePage() {
     const [selectedPill, setSelectedPill] = useState(0);
 
     const openBooking = () => {
-        window.open("https://calendar.app.google/od9m1iuctGZCfCsu5", "_blank");
+        window.open(
+            "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3wTpOJotSaC906J8kmhILbEKwe5j_PBGg_ye2dMhd5N0LFLpgLRZNmnfv-dR3OltarXavOQlsJ",
+            "_blank"
+        );
     };
 
     return (

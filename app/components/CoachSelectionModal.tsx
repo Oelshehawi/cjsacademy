@@ -41,7 +41,7 @@ const CoachSelectionModal = ({
             location: "Savage Creek",
             secondaryLocation: "Elite Golf",
             method: "link" as const,
-            linkUrl: "https://calendar.app.google/od9m1iuctGZCfCsu5",
+            linkUrl: "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3wTpOJotSaC906J8kmhILbEKwe5j_PBGg_ye2dMhd5N0LFLpgLRZNmnfv-dR3OltarXavOQlsJ",
         },
     ];
 
