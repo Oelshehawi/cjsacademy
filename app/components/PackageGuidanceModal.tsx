@@ -1,6 +1,7 @@
 'use client';
 
 import { AnimatePresence, motion } from 'motion/react';
+import { Star } from 'lucide-react';
 
 interface PackageGuidanceModalProps {
   isOpen: boolean;
@@ -29,10 +30,10 @@ const PackageGuidanceModal = ({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 20 }}
             onClick={(e) => e.stopPropagation()}
-            className='bg-white/10 backdrop-blur-xl rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-white/20'
+            className='bg-white/10 backdrop-blur-xl rounded-2xl p-4 sm:p-8 max-w-2xl w-full max-h-[90dvh] overflow-y-auto border border-white/20'
           >
-            <div className='text-center mb-8'>
-              <h2 className='text-3xl font-bold text-white mb-2'>
+            <div className='text-center mb-6 sm:mb-8'>
+              <h2 className='text-2xl sm:text-3xl font-bold text-white mb-2'>
                 Which Package Is Right for You?
               </h2>
               <p className='text-emerald-400/80'>
@@ -51,7 +52,7 @@ const PackageGuidanceModal = ({
                   onSelectPackage('Game Essentials Lesson', 'Private');
                   onClose();
                 }}
-                className='w-full bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-emerald-500/30 cursor-pointer text-left group'
+                className='w-full bg-white/5 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-white/10 hover:border-emerald-500/30 cursor-pointer text-left group'
               >
                 <h4 className='text-lg font-semibold text-emerald-300 mb-2 group-hover:text-emerald-200'>
                   New to golf or looking for a quick tune-up?
@@ -80,8 +81,12 @@ const PackageGuidanceModal = ({
                   onSelectPackage('Total Game Tune-Up', 'Private');
                   onClose();
                 }}
-                className='w-full bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-emerald-500/30 cursor-pointer text-left group'
+                className='w-full bg-emerald-800/25 backdrop-blur-sm rounded-xl p-4 sm:p-6 border-2 border-emerald-400/60 shadow-xl shadow-emerald-950/30 hover:border-emerald-300/80 cursor-pointer text-left group'
               >
+                <div className='mb-3 inline-flex items-center gap-2 rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-bold uppercase text-gray-950 shadow-lg shadow-emerald-950/30'>
+                  <Star className='h-3.5 w-3.5 fill-current' aria-hidden='true' />
+                  Most Popular
+                </div>
                 <h4 className='text-lg font-semibold text-emerald-300 mb-2 group-hover:text-emerald-200'>
                   Want to improve multiple areas of your game?
                 </h4>
@@ -112,7 +117,7 @@ const PackageGuidanceModal = ({
                   );
                   onClose();
                 }}
-                className='w-full bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10 hover:border-emerald-500/30 cursor-pointer text-left group'
+                className='w-full bg-white/5 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-white/10 hover:border-emerald-500/30 cursor-pointer text-left group'
               >
                 <h4 className='text-lg font-semibold text-emerald-300 mb-2 group-hover:text-emerald-200'>
                   Committed to long-term improvement and consistency?
@@ -135,7 +140,7 @@ const PackageGuidanceModal = ({
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4, delay: 0.4 }}
-                className='bg-emerald-800/20 backdrop-blur-sm rounded-xl p-6 border border-emerald-500/30 text-center mt-6'
+                className='bg-emerald-800/20 backdrop-blur-sm rounded-xl p-4 sm:p-6 border border-emerald-500/30 text-center mt-6'
               >
                 <p className='text-emerald-200/90'>
                   Not sure where to start? Begin with a single lesson, and

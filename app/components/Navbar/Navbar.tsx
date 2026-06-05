@@ -10,7 +10,6 @@ import { useHeroAnimation } from '../HeroAnimationContext';
 const navLinks = [
   { name: 'Home', href: '/' },
   { name: 'Programs & Services', href: '/programs' },
-  { name: 'Featured Program', href: '/programs#featured-program' },
   { name: 'Our Coaches', href: '/#coaches' },
   { name: 'Pricing', href: '/#pricing' },
 ];
@@ -114,10 +113,6 @@ export function Navbar() {
 
     if (isLinkActive(href)) {
       return `${base} text-white bg-emerald-500/20 border-emerald-400/40`;
-    }
-
-    if (linkName === 'Featured Program') {
-      return `${base} text-emerald-300 bg-emerald-500/10 border-emerald-500/30 hover:text-white hover:bg-emerald-500/20`;
     }
 
     return `${base} text-white/80 border-transparent hover:text-white hover:bg-white/10`;

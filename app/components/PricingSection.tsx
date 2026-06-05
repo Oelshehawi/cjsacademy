@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
+import { Star } from 'lucide-react';
 import CoachSelectionModal from './CoachSelectionModal';
 import PackageGuidanceModal from './PackageGuidanceModal';
 
@@ -336,14 +337,22 @@ const PackageCard = ({
       viewport={{ once: true }}
       exit={{ opacity: 0, y: -20 }}
       transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
-      className={`rounded-xl backdrop-blur-sm p-8 flex flex-col ${
+      className={`relative rounded-xl backdrop-blur-sm p-8 flex flex-col ${
         isPrimary ? 'h-auto' : 'h-175'
       } ${
         highlighted || isPrimary
-          ? 'bg-emerald-800/20 border-2 border-emerald-500/30'
+          ? 'bg-emerald-800/25 border-2 border-emerald-400/60 shadow-2xl shadow-emerald-950/40'
           : 'bg-white/5 border border-white/10'
       }`}
     >
+      {highlighted && (
+        <div className='mb-5 flex'>
+          <div className='inline-flex items-center gap-2 rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-bold uppercase text-gray-950 shadow-lg shadow-emerald-950/30'>
+            <Star className='h-3.5 w-3.5 fill-current' aria-hidden='true' />
+            Most Popular
+          </div>
+        </div>
+      )}
       <div
         className={`grow ${!isPrimary ? 'overflow-y-auto scrollbar-thin scrollbar-track-emerald-900/20 scrollbar-thumb-emerald-600/20 pr-2' : ''}`}
       >
