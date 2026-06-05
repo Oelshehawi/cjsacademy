@@ -343,10 +343,10 @@ const PackageCard = ({
         highlighted || isPrimary
           ? 'bg-emerald-800/25 border-2 border-emerald-400/60 shadow-2xl shadow-emerald-950/40'
           : 'bg-white/5 border border-white/10'
-      } ${highlighted ? 'pt-11' : ''}`}
+      } ${highlighted ? 'pt-10 md:pt-8' : ''}`}
     >
       {highlighted && (
-        <div className='absolute left-8 top-0 z-10 inline-flex -translate-y-1/2 items-center gap-2 rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-bold uppercase text-gray-950 shadow-lg shadow-emerald-950/30'>
+        <div className='absolute left-1/2 top-0 z-10 inline-flex -translate-x-1/2 -translate-y-1/2 items-center gap-2 rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-bold uppercase text-gray-950 shadow-lg shadow-emerald-950/30'>
           <Star className='h-3.5 w-3.5 fill-current' aria-hidden='true' />
           Most Popular
         </div>
