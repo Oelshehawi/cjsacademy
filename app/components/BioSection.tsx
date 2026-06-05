@@ -3,14 +3,6 @@
 import { useState, useRef } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
 
-declare global {
-  interface Window {
-    Calendly: {
-      initPopupWidget: (options: { url: string }) => void;
-    };
-  }
-}
-
 interface BioPill {
   title: string;
   content: string;
@@ -97,22 +89,6 @@ export default function BioSection() {
 
   const scrollToPricing = () => {
     document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth' });
-  };
-
-  const openCalendly = () => {
-    if (typeof window !== 'undefined' && window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/joshkujundzicgolf/golflessons',
-      });
-    }
-  };
-
-  const handleBookingClick = (coachName: string) => {
-    if (coachName === 'Josh Kujundzic') {
-      openCalendly();
-    } else {
-      scrollToPricing();
-    }
   };
 
   return (
@@ -277,7 +253,7 @@ export default function BioSection() {
                 }}
                 whileHover={{ scale: 1.015 }}
                 whileTap={{ scale: 0.985 }}
-                onClick={() => handleBookingClick(coach.name)}
+                onClick={scrollToPricing}
                 className='mt-6 w-full bg-emerald-500 hover:cursor-pointer text-white py-3 px-4 sm:px-6 rounded-lg text-base sm:text-lg font-semibold hover:bg-emerald-600 transition-colors duration-300 shadow-md'
               >
                 {coach.name === 'Josh Kujundzic'
