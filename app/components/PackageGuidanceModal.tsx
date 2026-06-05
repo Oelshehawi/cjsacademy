@@ -81,9 +81,9 @@ const PackageGuidanceModal = ({
                   onSelectPackage('Total Game Tune-Up', 'Private');
                   onClose();
                 }}
-                className='w-full bg-emerald-800/25 backdrop-blur-sm rounded-xl p-4 sm:p-6 border-2 border-emerald-400/60 shadow-xl shadow-emerald-950/30 hover:border-emerald-300/80 cursor-pointer text-left group'
+                className='relative mt-6 w-full bg-emerald-800/25 backdrop-blur-sm rounded-xl p-4 pt-8 sm:p-6 sm:pt-9 border-2 border-emerald-400/60 shadow-xl shadow-emerald-950/30 hover:border-emerald-300/80 cursor-pointer text-left group'
               >
-                <div className='mb-3 inline-flex items-center gap-2 rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-bold uppercase text-gray-950 shadow-lg shadow-emerald-950/30'>
+                <div className='absolute left-4 top-0 z-10 inline-flex -translate-y-1/2 items-center gap-2 rounded-full bg-emerald-400 px-3 py-1.5 text-xs font-bold uppercase text-gray-950 shadow-lg shadow-emerald-950/30 sm:left-6'>
                   <Star className='h-3.5 w-3.5 fill-current' aria-hidden='true' />
                   Most Popular
                 </div>
