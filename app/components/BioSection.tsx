@@ -284,18 +284,6 @@ export default function BioSection() {
                   ? 'Book a Lesson with Josh'
                   : `Book Now with ${coach.name.split(' ')[0]}`}
               </motion.button>
-              {coach.name === 'Josh Kujundzic' && (
-                <p className='mt-3 text-sm text-gray-300 text-center'>
-                  If there is no suitable availability, email Josh at{' '}
-                  <a
-                    href='mailto:joshkujundzicgolf@gmail.com'
-                    className='underline text-emerald-300 hover:text-emerald-200'
-                  >
-                    joshkujundzicgolf@gmail.com
-                  </a>
-                  .
-                </p>
-              )}
             </div>
           </motion.div>
         ))}

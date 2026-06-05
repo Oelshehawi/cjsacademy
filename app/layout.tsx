@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.cjsgolfacademy.ca'),
-  title: 'CJS Academy - Elite Golf Coaching',
+  title: 'CJS Academy - Golf Coaching',
   description:
     'Transform your golf game with personalized instruction from CPGA professionals at CJS Academy. Book your lesson today.',
   openGraph: {
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_CA',
     siteName: 'CJS Golf Academy',
-    title: 'CJS Academy - Elite Golf Coaching',
+    title: 'CJS Academy - Golf Coaching',
     description:
       'Transform your golf game with personalized instruction from CPGA professionals at CJS Academy. Book your lesson today.',
     images: [
@@ -25,13 +25,13 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'CJS Academy - Elite Golf Coaching',
+        alt: 'CJS Academy - Golf Coaching',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'CJS Academy - Elite Golf Coaching',
+    title: 'CJS Academy - Golf Coaching',
     description:
       'Transform your golf game with personalized instruction from CPGA professionals at CJS Academy. Book your lesson today.',
     images: [
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'CJS Academy - Elite Golf Coaching',
+        alt: 'CJS Academy - Golf Coaching',
       },
     ],
   },

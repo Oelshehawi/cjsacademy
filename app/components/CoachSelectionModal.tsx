@@ -30,7 +30,6 @@ const CoachSelectionModal = ({
             title: 'PGA of Canada Class "A" Professional',
             image: "/joshPhoto.jpg",
             location: "Quilchena Golf & Country Club",
-            secondaryLocation: "Elite Golf",
             method: "calendly" as const,
             calendlyUrl: "https://calendly.com/joshkujundzicgolf/golflessons",
         },
@@ -39,7 +38,6 @@ const CoachSelectionModal = ({
             title: 'PGA of Canada Class "A" Professional',
             image: "/christinePhoto.jpg",
             location: "Savage Creek",
-            secondaryLocation: "Elite Golf",
             method: "link" as const,
             linkUrl: "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3wTpOJotSaC906J8kmhILbEKwe5j_PBGg_ye2dMhd5N0LFLpgLRZNmnfv-dR3OltarXavOQlsJ",
         },
@@ -131,22 +129,6 @@ const CoachSelectionModal = ({
                                                     {coach.location}
                                                 </span>
                                             </div>
-                                            <div className="flex items-center justify-center gap-2 pt-1">
-                                                <svg
-                                                    className="w-3 h-3 text-emerald-400/70"
-                                                    fill="currentColor"
-                                                    viewBox="0 0 20 20"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                                <span className="text-white/70 text-xs">
-                                                    {coach.secondaryLocation}
-                                                </span>
-                                            </div>
                                         </div>
 
                                         <div className="mt-4 pt-4 border-t border-white/10">
@@ -162,18 +144,7 @@ const CoachSelectionModal = ({
                             ))}
                         </div>
 
-                        <div className="text-center mt-8 space-y-3">
-                            <p className="text-sm text-gray-300">
-                                If there is no suitable availability for Josh,
-                                email him at{" "}
-                                <a
-                                    href="mailto:joshkujundzicgolf@gmail.com"
-                                    className="underline text-emerald-300 hover:text-emerald-200"
-                                >
-                                    joshkujundzicgolf@gmail.com
-                                </a>
-                                .
-                            </p>
+                        <div className="text-center mt-8">
                             <button
                                 onClick={onClose}
                                 className="text-emerald-400/70 hover:text-emerald-300/80 px-6 py-2 text-sm transition-colors"
