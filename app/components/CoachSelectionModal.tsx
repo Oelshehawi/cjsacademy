@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
+import { trackEvent } from "../lib/analytics";
 
 declare global {
     interface Window {
@@ -26,6 +27,7 @@ const CoachSelectionModal = ({
 }: CoachSelectionModalProps) => {
     const coaches = [
         {
+            id: "josh" as const,
             name: "Josh Kujundzic",
             title: 'PGA of Canada Class "A" Professional',
             image: "/joshPhoto.jpg",
@@ -34,6 +36,7 @@ const CoachSelectionModal = ({
             calendlyUrl: "https://calendly.com/joshkujundzicgolf/golflessons",
         },
         {
+            id: "christine" as const,
             name: "Christine Wong",
             title: 'PGA of Canada Class "A" Professional',
             image: "/christinePhoto.jpg",
@@ -43,7 +46,11 @@ const CoachSelectionModal = ({
         },
     ];
 
-    const handleCoachSelect = (coach: (typeof coaches)[0]) => {
+    const handleCoachSelect = (coach: (typeof coaches)[number]) => {
+        trackEvent({
+            name: "booking_click",
+            params: { coach: coach.id, source: "pricing", package: `${packageName} ${packageType}` },
+        });
         if (coach.method === "calendly" && "calendlyUrl" in coach) {
             if (typeof window !== "undefined" && window.Calendly) {
                 window.Calendly.initPopupWidget({

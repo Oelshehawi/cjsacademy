@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { trackEvent } from "../../lib/analytics";
 import { motion } from "motion/react";
 import {
     FaCalendarAlt,
@@ -220,6 +221,7 @@ export function FeaturedProgramSection() {
                                 </p>
                                 <a
                                     href="mailto:cjsgolfinc@gmail.com?subject=Golf%20Foundations%20Series%20Registration"
+                                    onClick={() => trackEvent({ name: "email_click", params: { source: "foundations_series" } })}
                                     className="inline-flex items-center gap-2 mt-3 font-bold text-zinc-900 hover:text-[#f66f72] transition-colors"
                                 >
                                     <FaEnvelope className="w-4 h-4" />

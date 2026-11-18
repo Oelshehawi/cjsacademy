@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
+import { trackEvent } from '../lib/analytics';
 
 declare global {
   interface Window {
@@ -44,6 +45,7 @@ export default function JoshPage() {
   const [selectedPill, setSelectedPill] = useState(0);
 
   const openCalendly = () => {
+    trackEvent({ name: 'booking_click', params: { coach: 'josh', source: 'coach_page' } });
     if (typeof window !== 'undefined' && window.Calendly) {
       window.Calendly.initPopupWidget({
         url: 'https://calendly.com/joshkujundzicgolf/golflessons',
