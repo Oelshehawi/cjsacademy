@@ -3,14 +3,7 @@
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import { trackEvent } from "../lib/analytics";
-
-declare global {
-    interface Window {
-        Calendly: {
-            initPopupWidget: (options: { url: string }) => void;
-        };
-    }
-}
+import { BOOKING_URLS } from "../lib/booking";
 
 interface CoachSelectionModalProps {
     isOpen: boolean;
@@ -32,8 +25,6 @@ const CoachSelectionModal = ({
             title: 'PGA of Canada Class "A" Professional',
             image: "/joshPhoto.jpg",
             location: "Quilchena Golf & Country Club",
-            method: "calendly" as const,
-            calendlyUrl: "https://calendly.com/joshkujundzicgolf/golflessons",
         },
         {
             id: "christine" as const,
@@ -41,8 +32,6 @@ const CoachSelectionModal = ({
             title: 'PGA of Canada Class "A" Professional',
             image: "/christinePhoto.jpg",
             location: "Savage Creek",
-            method: "link" as const,
-            linkUrl: "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3wTpOJotSaC906J8kmhILbEKwe5j_PBGg_ye2dMhd5N0LFLpgLRZNmnfv-dR3OltarXavOQlsJ",
         },
     ];
 
@@ -51,15 +40,7 @@ const CoachSelectionModal = ({
             name: "booking_click",
             params: { coach: coach.id, source: "pricing", package: `${packageName} ${packageType}` },
         });
-        if (coach.method === "calendly" && "calendlyUrl" in coach) {
-            if (typeof window !== "undefined" && window.Calendly) {
-                window.Calendly.initPopupWidget({
-                    url: coach.calendlyUrl,
-                });
-            }
-        } else if (coach.method === "link" && "linkUrl" in coach) {
-            window.open(coach.linkUrl, "_blank");
-        }
+        window.open(BOOKING_URLS[coach.id], "_blank");
         onClose();
     };
 
@@ -140,10 +121,7 @@ const CoachSelectionModal = ({
 
                                         <div className="mt-4 pt-4 border-t border-white/10">
                                             <span className="inline-block bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full text-sm font-medium">
-                                                {coach.method === "calendly" ||
-                                                coach.method === "link"
-                                                    ? "Instant Booking"
-                                                    : "Email Booking"}
+                                                Instant Booking
                                             </span>
                                         </div>
                                     </div>

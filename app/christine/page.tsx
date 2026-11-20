@@ -4,14 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import Image from "next/image";
 import { trackEvent } from "../lib/analytics";
-
-declare global {
-    interface Window {
-        Calendly: {
-            initPopupWidget: (options: { url: string }) => void;
-        };
-    }
-}
+import { BOOKING_URLS } from "../lib/booking";
 
 const coachBio = {
     name: "Christine Wong",
@@ -46,10 +39,7 @@ export default function ChristinePage() {
 
     const openBooking = () => {
         trackEvent({ name: "booking_click", params: { coach: "christine", source: "coach_page" } });
-        window.open(
-            "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ3wTpOJotSaC906J8kmhILbEKwe5j_PBGg_ye2dMhd5N0LFLpgLRZNmnfv-dR3OltarXavOQlsJ",
-            "_blank"
-        );
+        window.open(BOOKING_URLS.christine, "_blank");
     };
 
     return (

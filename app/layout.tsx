@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import CalendlyScript from './components/CalendlyScript';
 import GoogleAnalytics from './components/GoogleAnalytics';
 import { Navbar } from './components/Navbar/Navbar';
 import { HeroAnimationProvider } from './components/HeroAnimationContext';
@@ -53,14 +52,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang='en' className='scroll-smooth'>
-      <head>
-        <link
-          href='https://assets.calendly.com/assets/external/widget.css'
-          rel='stylesheet'
-        />
-      </head>
       <body className={`${inter.className} antialiased`}>
-        <CalendlyScript />
         <GoogleAnalytics />
         <HeroAnimationProvider>
           <Navbar />

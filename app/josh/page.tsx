@@ -4,14 +4,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import Image from 'next/image';
 import { trackEvent } from '../lib/analytics';
-
-declare global {
-  interface Window {
-    Calendly: {
-      initPopupWidget: (options: { url: string }) => void;
-    };
-  }
-}
+import { BOOKING_URLS } from '../lib/booking';
 
 const coachBio = {
   name: 'Josh Kujundzic',
@@ -44,13 +37,9 @@ const coachBio = {
 export default function JoshPage() {
   const [selectedPill, setSelectedPill] = useState(0);
 
-  const openCalendly = () => {
+  const openBooking = () => {
     trackEvent({ name: 'booking_click', params: { coach: 'josh', source: 'coach_page' } });
-    if (typeof window !== 'undefined' && window.Calendly) {
-      window.Calendly.initPopupWidget({
-        url: 'https://calendly.com/joshkujundzicgolf/golflessons',
-      });
-    }
+    window.open(BOOKING_URLS.josh, '_blank');
   };
 
   return (
@@ -112,7 +101,7 @@ export default function JoshPage() {
             <motion.button
               whileHover={{ scale: 1.015 }}
               whileTap={{ scale: 0.985 }}
-              onClick={openCalendly}
+              onClick={openBooking}
               className='w-full bg-emerald-500 hover:cursor-pointer text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-emerald-600 transition-colors duration-300 shadow-md'
             >
               Book a Lesson with Josh
